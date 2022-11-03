@@ -111,12 +111,11 @@ const linkListExternal = [
 
 function LinkRender(theLink: any) {
     return (
-        <Link href={theLink.url} >
-            <a href={theLink.url} className="no-underline">
-                <div style={{
+        <Link href={theLink.url} className="no-underline">
+            <div style={{
 
-                }}
-                    className="flex 
+            }}
+                className="flex 
             flex-col 
             p-0 
             w-full
@@ -134,16 +133,15 @@ function LinkRender(theLink: any) {
             transition-all
             ">
 
-                    <div className="text-2xl font-extrabold m-2 text-secondary">
-                        {theLink.title}
-                    </div>
-
-                    <div className="m-2 ">
-                        {theLink.description}
-                    </div>
-
+                <div className="text-2xl font-extrabold m-2 text-secondary">
+                    {theLink.title}
                 </div>
-            </a>
+
+                <div className="m-2 ">
+                    {theLink.description}
+                </div>
+
+            </div>
         </Link>
     )
 }

@@ -75,7 +75,7 @@ function HeaderBar() {
                 <div className="mr-4 mt-2"><ThemeChanger /></div>
 
 
-                {!isLoading && user?.picture ? (<Link href="/profile" ><a className="btn btn-circle border-1 border-neutral-content"><img src={user.picture} className="w-full rounded-full" alt='avatar' /></a></Link>) : (<Link href="/api/auth/login" ><a className="btn btn-circle btn-accent">Login</a></Link>)}
+                {!isLoading && user?.picture ? (<Link href="/profile" className="btn btn-circle border-1 border-neutral-content"><img src={user.picture} className="w-full rounded-full" alt='avatar' /></Link>) : (<Link href="/api/auth/login" className="btn btn-circle btn-accent">Login</Link>)}
             </div>
         </div>
 

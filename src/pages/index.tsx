@@ -36,9 +36,7 @@ const Home: NextPage = () => {
                 <div className="w-full grid gap-8 grid-cols-2 mt-12 mb-8">
                     {buttonList.map((button) => (
                         <Fragment key={button.buttonText}>
-                            <Link href={button.buttonLink}>
-                                <a className="btn btn-primary bg-opacity-20 uppercase text-xl leading-5">{button.buttonText}</a>
-                            </Link>
+                            <Link href={button.buttonLink} className="btn btn-primary bg-opacity-20 uppercase text-xl leading-5">{button.buttonText}</Link>
                         </Fragment>
                     ))}
                 </div>
