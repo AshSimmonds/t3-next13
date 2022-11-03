@@ -5,6 +5,10 @@ import { type Session } from "next-auth";
 import { getServerAuthSession } from "../common/get-server-auth-session";
 import { prisma } from "../db/client";
 
+import { getAccessToken, getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+
+
+
 type CreateContextOptions = {
     session: Session | null;
 };
@@ -25,15 +29,48 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * This is the actual context you'll use in your router
  * @link https://trpc.io/docs/context
  **/
-export const createContext = async (opts: CreateNextContextOptions) => {
-    const { req, res } = opts;
+// export const createContext = async (opts: CreateNextContextOptions) => {
+//     const { req, res } = opts;
 
-    // Get the session from the server using the unstable_getServerSession wrapper function
-    const session = await getServerAuthSession({ req, res });
+//     // Get the session from the server using the unstable_getServerSession wrapper function
+//     const session = await getServerAuthSession({ req, res });
 
-    return await createContextInner({
+//     return await createContextInner({
+//         session,
+//     });
+// };
+
+
+
+
+
+
+export async function createContext({
+    req,
+    res,
+}: CreateNextContextOptions) {
+    // Create your context based on the request object
+    // Will be available as `ctx` in all your resolvers
+
+    async function getUserFromHeader() {
+
+        // const { accessToken } = await getAccessToken(req, res)
+
+        const session = getSession(req, res)
+
+        return session
+        // return session.user
+
+    }
+    const session = await getUserFromHeader();
+
+    return {
         session,
-    });
-};
+    };
+}
+
+
+
+
 
 export type Context = inferAsyncReturnType<typeof createContext>;
