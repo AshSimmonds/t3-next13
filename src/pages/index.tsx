@@ -55,7 +55,7 @@ const Home: NextPage = () => {
         <div className="flex w-full items-center justify-center pt-6 text-2xl text-blue-500">
           {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
         </div>
-        <AuthShowcase />
+        {/* <AuthShowcase /> */}
       </main>
     </>
   );
