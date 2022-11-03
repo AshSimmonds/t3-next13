@@ -22,11 +22,17 @@ const AccessPage: NextPage = () => {
     // const accessLevelBackendPublic = trpc.example.hello.useQuery({ text: "from tRPC" });
     const accessLevelBackendPublic = trpc.example.canAccessBackendPublic.useQuery()
     // const { data: accessLevelBackendRegistered } = trpc.auth.getSecretMessage.useQuery();
-    const  accessLevelBackendRegistered = trpc.example.canAccessBackendRegistered.useQuery()
+    const accessLevelBackendRegistered = trpc.example.canAccessBackendRegistered.useQuery()
 
-    console.log(`AccessPage accessLevelBackendRegistered: ${JSON.stringify(accessLevelBackendRegistered, null, 4)}`)
+    const accessLevelBackendPremium = trpc.example.canAccessBackendPremium.useQuery()
 
-    console.log(`AccessPage accessLevelBackendRegistered.data: ${JSON.stringify(accessLevelBackendRegistered.data, null, 4)}`)
+    const accessLevelBackendPower = trpc.example.canAccessBackendPower.useQuery()
+
+    const accessLevelBackendAdmin = trpc.example.canAccessBackendAdmin.useQuery()
+
+    // console.log(`AccessPage accessLevelBackendRegistered: ${JSON.stringify(accessLevelBackendRegistered, null, 4)}`)
+
+    // console.log(`AccessPage accessLevelBackendRegistered.data: ${JSON.stringify(accessLevelBackendRegistered.data, null, 4)}`)
 
     // const accessLevelBackendPublic = trpc.example
 
@@ -68,7 +74,10 @@ const AccessPage: NextPage = () => {
                         Registered: {isLoading ? 'loading...' : (user ? <>{successOutcome}</> : <>{failOutcome}</>)}
                     </></li>
                     <li><>
-                        Applicant: {isLoading ? 'loading...' : (user?.applicant ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        Premium: {isLoading ? 'loading...' : (user?.premium ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                    </></li>
+                    <li><>
+                        Power: {isLoading ? 'loading...' : (user?.power ? <>{successOutcome}</> : <>{failOutcome}</>)}
                     </></li>
                     <li><>
                         Admin: {isLoading ? 'loading...' : (user?.admin ? <>{successOutcome}</> : <>{failOutcome}</>)}
@@ -101,14 +110,17 @@ const AccessPage: NextPage = () => {
                         Guest: {accessLevelBackendPublic.isFetching ? 'fetching...' : (accessLevelBackendPublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                     </></li>
                     <li><>
-                    Registered: {accessLevelBackendRegistered.isLoading ? 'loading...' : (accessLevelBackendRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li>
-                    {/* <li><>
-                    Applicant: {accessLevelDataApplicant.isFetching ? 'fetching...' : (accessLevelDataApplicant.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li> */}
-                    {/* <li><>
-                    Admin: {accessLevelDataAdmin.isFetching ? 'fetching...' : (accessLevelDataAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li> */}
+                        Registered: {accessLevelBackendRegistered.isLoading ? 'trying...' : (accessLevelBackendRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                    </></li>
+                    <li><>
+                        Premium: {accessLevelBackendPremium.isFetching ? 'fetching...' : (accessLevelBackendPremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                    </></li>
+                    <li><>
+                        Power: {accessLevelBackendPower.isFetching ? 'fetching...' : (accessLevelBackendPower.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                    </></li>
+                    <li><>
+                        Admin: {accessLevelBackendAdmin.isFetching ? 'fetching...' : (accessLevelBackendAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                    </></li>
                 </ul>
 
             </div>

@@ -46,6 +46,22 @@ const isPremium = t.middleware(({ ctx, next }) => {
 })
 
 
+const isPower = t.middleware(({ ctx, next }) => {
+    console.log(`isAuthed: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
+
+    if (!ctx.session || !ctx.session.user || !ctx.session.user.power) {
+        throw new TRPCError({ code: "UNAUTHORIZED" })
+    }
+
+    return next({
+        ctx: {
+            // infers the `session` as non-nullable
+            session: { ...ctx.session, user: ctx.session.user },
+        },
+    })
+})
+
+
 const isAdmin = t.middleware(({ ctx, next }) => {
     console.log(`isAuthed: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
@@ -68,6 +84,8 @@ export const publicProcedure = t.procedure
 export const protectedProcedure = t.procedure.use(isRegistered)
 
 export const premiumProcedure = t.procedure.use(isPremium)
+
+export const powerProcedure = t.procedure.use(isPower)
 
 export const adminProcedure = t.procedure.use(isAdmin)
 

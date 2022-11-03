@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, publicProcedure, protectedProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure, premiumProcedure, powerProcedure, adminProcedure } from "../trpc";
 
 export const exampleRouter = router({
     hello: publicProcedure
@@ -19,6 +19,18 @@ export const exampleRouter = router({
     }),
 
     canAccessBackendRegistered: protectedProcedure.query(({ ctx }) => {
+        return true;
+    }),
+
+    canAccessBackendPremium: premiumProcedure.query(({ ctx }) => {
+        return true;
+    }),
+
+    canAccessBackendPower: powerProcedure.query(({ ctx }) => {
+        return true;
+    }),
+
+    canAccessBackendAdmin: adminProcedure.query(({ ctx }) => {
         return true;
     }),
 
