@@ -32,7 +32,7 @@ function HeaderBar() {
     const fallbackTheme = !theme ? 'ashlight' : theme
 
     return (
-        <div className="navbar bg-base-100 bg-gradient-to-b from-base-100 via-base-100 to-base-200 shadow-2xl border-b-2 border-primary border-opacity-10">
+        <div className="navbar bg-base-100 bg-gradient-to-b from-base-100 via-base-100 to-base-200 shadow-xl border-b-2 border-primary border-opacity-10">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">

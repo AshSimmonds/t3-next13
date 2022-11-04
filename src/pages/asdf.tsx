@@ -117,18 +117,18 @@ function LinkRender(theLink: any) {
             }}
                 className="flex 
             flex-col 
-            p-0 
+            p-2 
             w-full
             md:w-64 
             cursor-pointer 
             bg-base-200
             rounded-lg
-            shadow-lg
+            shadow-md
+            border:default
             hover:bg-base-300 
             hover:bg-opacity-50
-            border border-base-100
             hover:border-secondary
-            hover:scale-110
+            hover:scale-105
             hover:shadow-2xl
             transition-all
             ">

@@ -142,6 +142,10 @@ function AccessCard(props: any) {
             rounded-lg
             shadow-lg
             border border-base-100
+            hover:scale-102
+            hover:shadow-xl
+            transition-all
+
             ">
 
             <h2>{props.title}</h2>
