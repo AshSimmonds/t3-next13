@@ -49,17 +49,12 @@ export async function createContext({
     req,
     res,
 }: CreateNextContextOptions) {
-    // Create your context based on the request object
-    // Will be available as `ctx` in all your resolvers
 
     async function getUserFromHeader() {
-
-        // const { accessToken } = await getAccessToken(req, res)
 
         const session = getSession(req, res)
 
         return session
-        // return session.user
 
     }
     const session = await getUserFromHeader();
