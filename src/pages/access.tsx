@@ -49,86 +49,52 @@ const AccessPage: NextPage = () => {
 
             <h1>Testing different levels of access</h1>
 
-            <div className="flex 
-            flex-col 
-            p-0 
-            w-full
-            md:w-64 
-            cursor-pointer 
-            bg-base-200
-            rounded-lg
-            shadow-lg
-            hover:bg-base-300 
-            hover:bg-opacity-50
-            border border-base-100
-            hover:border-secondary
-            hover:scale-110
-            hover:shadow-2xl
-            transition-all
-            ">
-                <h2>Front-end UI access</h2>
+            <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
 
-                <ul>
-                    <li>Guest: {successOutcome}</li>
-                    <li><>
-                        Registered: {isLoading ? 'loading...' : (user ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Premium: {isLoading ? 'loading...' : (user?.premium ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Power: {isLoading ? 'loading...' : (user?.power ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Admin: {isLoading ? 'loading...' : (user?.admin ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                </ul>
-            </div>
-
-            <div
-                className="flex 
-            flex-col 
-            p-0 
-            w-full
-            md:w-64 
-            cursor-pointer 
-            bg-base-200
-            rounded-lg
-            shadow-lg
-            hover:bg-base-300 
-            hover:bg-opacity-50
-            border border-base-100
-            hover:border-secondary
-            hover:scale-110
-            hover:shadow-2xl
-            transition-all
-            ">
-                <h2>Back-end SERVER access</h2>
-
-                <ul>
-                    <li><>
-                        Guest: {accessLevelBackendPublic.isFetching ? 'fetching...' : (accessLevelBackendPublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Registered: {accessLevelBackendRegistered.isLoading ? 'trying...' : (accessLevelBackendRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Premium: {accessLevelBackendPremium.isFetching ? 'fetching...' : (accessLevelBackendPremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Power: {accessLevelBackendPower.isFetching ? 'fetching...' : (accessLevelBackendPower.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                    <li><>
-                        Admin: {accessLevelBackendAdmin.isFetching ? 'fetching...' : (accessLevelBackendAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                    </></li>
-                </ul>
-
-            </div>
+                <AccessCard title="Front-end UI" >
+                    <ul>
+                        <li>Guest: {successOutcome}</li>
+                        <li><>
+                            Registered: {isLoading ? 'loading...' : (user ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Premium: {isLoading ? 'loading...' : (user?.premium ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Power: {isLoading ? 'loading...' : (user?.power ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Admin: {isLoading ? 'loading...' : (user?.admin ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                    </ul>
+                </AccessCard>
 
 
-            <h2>Back-end DATA access:</h2>
+                <AccessCard title="Back-end SERVER" >
 
-            {/* <ul>
+                    <ul>
+                        <li><>
+                            Guest: {accessLevelBackendPublic.isFetching ? 'fetching...' : (accessLevelBackendPublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Registered: {accessLevelBackendRegistered.isLoading ? 'trying...' : (accessLevelBackendRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Premium: {accessLevelBackendPremium.isFetching ? 'fetching...' : (accessLevelBackendPremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Power: {accessLevelBackendPower.isFetching ? 'fetching...' : (accessLevelBackendPower.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Admin: {accessLevelBackendAdmin.isFetching ? 'fetching...' : (accessLevelBackendAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                    </ul>
+
+                </AccessCard>
+
+                <AccessCard title="Back-end DATA" >
+
+                    {/* <ul>
                 <li><>
                     Guest: {accessLevelDataPublic.isFetching ? 'fetching...' : (accessLevelDataPublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                 </></li>
@@ -143,6 +109,11 @@ const AccessPage: NextPage = () => {
                 </></li>
             </ul> */}
 
+                </AccessCard>
+
+            </div>
+
+
             <hr />
 
             <h2>Current user:</h2>
@@ -155,5 +126,35 @@ const AccessPage: NextPage = () => {
 
 }
 
+
+
+
+
+function AccessCard(props: any) {
+    return (
+        <div
+            className="flex 
+            flex-col 
+            p-4 
+            w-full
+            md:w-64 
+            bg-base-200
+            rounded-lg
+            shadow-lg
+            border border-base-100
+            ">
+
+            <h2>{props.title}</h2>
+
+            {props.children}
+
+        </div>
+    )
+}
+
+
+
+
+
+
 export default AccessPage
-// export const getServerSideProps = withPageAuthRequired()
