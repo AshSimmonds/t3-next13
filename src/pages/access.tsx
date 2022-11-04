@@ -142,7 +142,7 @@ function AccessCard(props: any) {
             rounded-lg
             shadow-lg
             border border-base-100
-            hover:scale-102
+            hover:scale-105
             hover:shadow-xl
             transition-all
 

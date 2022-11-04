@@ -4,7 +4,7 @@ function FooterBar() {
 
     return (
 
-        <footer className="footer footer-center p-4 text-base-content
+        <footer className="footer footer-center p-4 mt-4 text-base-content
         bg-base-100 bg-gradient-to-b from-base-200 via-base-200 to-base-100         
         
         ">
