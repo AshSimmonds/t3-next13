@@ -15,7 +15,7 @@ export const router = t.router
 
 
 const isRegistered = t.middleware(({ ctx, next }) => {
-    console.log(`isAuthed: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
+    // console.log(`isRegistered: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
     if (!ctx.session || !ctx.session.user) {
         throw new TRPCError({ code: "UNAUTHORIZED" })
@@ -31,7 +31,7 @@ const isRegistered = t.middleware(({ ctx, next }) => {
 
 
 const isPremium = t.middleware(({ ctx, next }) => {
-    console.log(`isAuthed: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
+    // console.log(`isPremium: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
     if (!ctx.session || !ctx.session.user || !ctx.session.user.premium) {
         throw new TRPCError({ code: "UNAUTHORIZED" })
@@ -47,7 +47,7 @@ const isPremium = t.middleware(({ ctx, next }) => {
 
 
 const isPower = t.middleware(({ ctx, next }) => {
-    console.log(`isAuthed: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
+    // console.log(`isPower: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
     if (!ctx.session || !ctx.session.user || !ctx.session.user.power) {
         throw new TRPCError({ code: "UNAUTHORIZED" })
@@ -63,7 +63,7 @@ const isPower = t.middleware(({ ctx, next }) => {
 
 
 const isAdmin = t.middleware(({ ctx, next }) => {
-    console.log(`isAuthed: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
+    // console.log(`isAdmin: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
     if (!ctx.session || !ctx.session.user || !ctx.session.user.admin) {
         throw new TRPCError({ code: "UNAUTHORIZED" })

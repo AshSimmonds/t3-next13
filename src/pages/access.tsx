@@ -36,7 +36,8 @@ const AccessPage: NextPage = () => {
 
     // const accessLevelBackendPublic = trpc.example
 
-    // const accessLevelDataPublic = trpc.video.asdfPsuedoRandom.useQuery('public')
+    const accessLevelDataPublic = trpc.example.canAccessDatabasePublic.useQuery()
+    console.log(`AccessPage accessLevelDataPublic: ${JSON.stringify(accessLevelDataPublic, null, 4)}`)
     // const accessLevelDataRegistered = trpc.video.asdfPsuedoRandom.useQuery('registered')
     // const accessLevelDataApplicant = trpc.video.asdfPsuedoRandom.useQuery('applicant')
     // const accessLevelDataAdmin = trpc.video.asdfPsuedoRandom.useQuery('admin')
@@ -94,20 +95,23 @@ const AccessPage: NextPage = () => {
 
                 <AccessCard title="Back-end DATA" >
 
-                    {/* <ul>
-                <li><>
-                    Guest: {accessLevelDataPublic.isFetching ? 'fetching...' : (accessLevelDataPublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li>
-                <li><>
-                    Registered: {accessLevelDataRegistered.isFetching ? 'fetching...' : (accessLevelDataRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li>
-                <li><>
-                    Applicant: {accessLevelDataApplicant.isFetching ? 'fetching...' : (accessLevelDataApplicant.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li>
-                <li><>
-                    Admin: {accessLevelDataAdmin.isFetching ? 'fetching...' : (accessLevelDataAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                </></li>
-            </ul> */}
+                    <ul>
+                        <li><>
+                            Guest: {accessLevelDataPublic.isFetching ? 'fetching...' : (accessLevelDataPublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        {/* <li><>
+                            Registered: {accessLevelDataRegistered.isFetching ? 'fetching...' : (accessLevelDataRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li> */}
+                        {/* <li><>
+                            Premium: {accessLevelDataApplicant.isFetching ? 'fetching...' : (accessLevelDataApplicant.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li> */}
+                        {/* <li><>
+                            Power: {accessLevelDataApplicant.isFetching ? 'fetching...' : (accessLevelDataApplicant.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li> */}
+                        {/* <li><>
+                            Admin: {accessLevelDataAdmin.isFetching ? 'fetching...' : (accessLevelDataAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li> */}
+                    </ul>
 
                 </AccessCard>
 
