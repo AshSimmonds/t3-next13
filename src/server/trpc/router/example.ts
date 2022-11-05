@@ -50,6 +50,21 @@ export const exampleRouter = router({
         return fetchFromAirtableAsBoolean()
     }),
 
+    canAccessDatabaseRegistered: protectedProcedure.query(async ({ ctx }) => {
+        return fetchFromAirtableAsBoolean()
+    }),
+
+    canAccessDatabasePremium: premiumProcedure.query(async ({ ctx }) => {
+        return fetchFromAirtableAsBoolean()
+    }),
+
+    canAccessDatabasePower: powerProcedure.query(async ({ ctx }) => {
+        return fetchFromAirtableAsBoolean()
+    }),
+
+    canAccessDatabaseAdmin: adminProcedure.query(async ({ ctx }) => {
+        return fetchFromAirtableAsBoolean()
+    }),
 
 
 
@@ -82,7 +97,7 @@ async function fetchFromAirtableAsBoolean() {
     const airtableResult = await fetchFromAirtable()
         .then((resultJson: { error: { message: string | undefined; }; records: any; }) => {
 
-            console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
+            // console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
 
             if (resultJson.error) {
                 console.log(`fetchFromAirtableAsBoolean resultJson.error: ${JSON.stringify(resultJson.error, null, 4)}`)
