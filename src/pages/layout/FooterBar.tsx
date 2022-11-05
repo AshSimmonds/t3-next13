@@ -10,7 +10,7 @@ function FooterBar() {
         ">
             <div >
                 <Link href={"/asdf"}>asdf</Link>
-                <Link href={"/"}>Home</Link>
+                <Link href={"/index-old"}>Home</Link>
             </div>
         </footer>
 

@@ -53,7 +53,7 @@ function HeaderBar() {
                         <li><Link href="/typography">Typography</Link></li>
                     </ul>
                 </div>
-                <Link href="/" ><img src={`/blue_dwarf_space_long_logo-undefined.png`} alt="Blue Dwarf Space logo" className="max-h-12 max-w-36 cursor-pointer" /></Link>
+                <Link href="/index-old" ><img src={`/blue_dwarf_space_long_logo-undefined.png`} alt="Blue Dwarf Space logo" className="max-h-12 max-w-36 cursor-pointer" /></Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
