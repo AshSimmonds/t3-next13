@@ -2,6 +2,7 @@
 
 import "../styles/globals.css"
 import HeaderBar from "./HeaderBar"
+import FooterBar from "./FooterBar";
 import { UserProvider } from '@auth0/nextjs-auth0';
 
 export default function RootLayout({
@@ -18,6 +19,8 @@ export default function RootLayout({
                     <HeaderBar />
 
                     {children}
+
+                    <FooterBar />
 
                 </UserProvider>
             </body>
