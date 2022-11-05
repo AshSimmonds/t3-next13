@@ -1,4 +1,8 @@
+'use client';
+
 import "../styles/globals.css"
+import HeaderBar from "./HeaderBar"
+import { UserProvider } from '@auth0/nextjs-auth0';
 
 export default function RootLayout({
     children,
@@ -8,7 +12,15 @@ export default function RootLayout({
     return (
         <html>
             <head></head>
-            <body>{children}</body>
+            <body>
+                <UserProvider>
+
+                    <HeaderBar />
+
+                    {children}
+
+                </UserProvider>
+            </body>
         </html>
     )
 }
