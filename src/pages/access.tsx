@@ -61,10 +61,10 @@ const AccessPage: NextPage = () => {
                             Registered: {isLoading ? 'loading...' : (user ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         <li><>
-                            Premium: {isLoading ? 'loading...' : (user?.premium ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                            Premium: {isLoading ? 'loading...' : (user?.premium || user?.admin ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         <li><>
-                            Power: {isLoading ? 'loading...' : (user?.power ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                            Power: {isLoading ? 'loading...' : (user?.power || user?.admin ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         <li><>
                             Admin: {isLoading ? 'loading...' : (user?.admin ? <>{successOutcome}</> : <>{failOutcome}</>)}

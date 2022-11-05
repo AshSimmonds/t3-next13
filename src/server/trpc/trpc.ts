@@ -33,7 +33,7 @@ const isRegistered = t.middleware(({ ctx, next }) => {
 const isPremium = t.middleware(({ ctx, next }) => {
     // console.log(`isPremium: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
-    if (!ctx.session || !ctx.session.user || !ctx.session.user.premium) {
+    if ((!ctx.session || !ctx.session.user || !ctx.session.user.premium) && (!ctx.session || !ctx.session.user.admin)) {
         throw new TRPCError({ code: "UNAUTHORIZED" })
     }
 
@@ -49,7 +49,7 @@ const isPremium = t.middleware(({ ctx, next }) => {
 const isPower = t.middleware(({ ctx, next }) => {
     // console.log(`isPower: ctx.session: ${JSON.stringify(ctx.session, null, 4)}`)
 
-    if (!ctx.session || !ctx.session.user || !ctx.session.user.power) {
+    if ((!ctx.session || !ctx.session.user || !ctx.session.user.power) && (!ctx.session || !ctx.session.user.admin)) {
         throw new TRPCError({ code: "UNAUTHORIZED" })
     }
 
