@@ -1,5 +1,6 @@
 'use client';
 
+// import Head from 'next/head'
 import "../styles/globals.css"
 import HeaderBar from "./HeaderBar"
 import FooterBar from "./FooterBar";
@@ -12,15 +13,25 @@ export default function RootLayout({
 }) {
     return (
         <html>
-            <head></head>
+            <head>
+                <title>Recombobulator | Blue Dwarf Space</title>
+            </head>
             <body>
                 <UserProvider>
 
-                    <HeaderBar />
+                    <div className="flex flex-col bg-base-100" data-theme="system" >
 
-                    {children}
+                        <HeaderBar />
 
-                    <FooterBar />
+                        <div className="prose mx-0 sm:mx-auto sm:w-full md:w-11/12 lg:w-10/12 xl:w-9/12 sm:p-0 md:p-4 border-0 bg-base-200 shadow-xl">
+
+                            {children}
+
+                        </div>
+
+                        <FooterBar />
+
+                    </div>
 
                 </UserProvider>
             </body>
