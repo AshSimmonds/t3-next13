@@ -72,7 +72,7 @@ const AccessPage: NextPage = () => {
 
 
 
-
+    const { example } = trpc.useContext()
 
     const initialIsFavourite = trpc.example.getFavourite.useQuery().data
 
@@ -106,7 +106,10 @@ const AccessPage: NextPage = () => {
             actions: {
                 toggleFavourite: (context, event) => {
                     console.log(`toggleFavourite: ${context.isFavourite}`)
-                    context.isFavourite = !context.isFavourite
+                    example.toggleFavourite.fetch().then((isNowFavourite) => {
+                        context.isFavourite = isNowFavourite
+                    })
+                    // context.isFavourite = !context.isFavourite
                 },
                 delayASecond: (context, event) => {
                     console.log(`delayASecond: ${JSON.stringify(event, null, 4)}`)
@@ -120,7 +123,7 @@ const AccessPage: NextPage = () => {
 
 
 
-    function Tooggle() {
+    function ComponentToggleSwitch() {
         const [current, send] = useMachine(favouriteMachine)
 
         return (
@@ -139,11 +142,6 @@ const AccessPage: NextPage = () => {
             </>
         );
     }
-
-
-
-
-
 
 
 
@@ -256,9 +254,7 @@ const AccessPage: NextPage = () => {
 
 
                 <AccessCard title="Toggle DATA" >
-                    <Tooggle />
-
-
+                    <ComponentToggleSwitch />
                 </AccessCard>
 
 
