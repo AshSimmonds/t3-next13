@@ -27,6 +27,7 @@ export const trpc = createTRPCNext<AppRouter>({
             ],
         };
     },
+    // TODO: figure out why TRPC should or should not use SSR, it is FALSE by default
     ssr: false,
 });
 

@@ -14,7 +14,7 @@ const AccessPage: NextPage = () => {
     const { user, error, isLoading } = useUser()
 
     if (error) {
-        console.log(`error: ${error}`)
+        console.log(`AccessPage error: ${error}`)
 
         return <div>{error.message}</div>
     }

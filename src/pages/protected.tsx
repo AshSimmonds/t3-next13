@@ -17,11 +17,9 @@ export default function ProtectedPage({ user }: ProfileProps): React.ReactElemen
                 Should only be able to land here if logged in.
             </p>
 
-            <p>
-                <pre>
-                    {JSON.stringify(user, null, 4)}
-                </pre>
-            </p>
+            <pre>
+                {JSON.stringify(user, null, 4)}
+            </pre>
         </>
     )
 
