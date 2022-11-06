@@ -40,7 +40,7 @@ function HeaderBar() {
                 {/* <div className="mr-4 mt-2"><ThemeChanger /></div> */}
 
 
-                {!isLoading && user?.picture ? (<Link href="/profile" className="btn btn-circle border-1 border-neutral-content"><Image src={user.picture} className="w-full rounded-full" width={100} height={100}alt='avatar' /></Link>) : (<Link href="/api/auth/login" className="btn btn-circle btn-accent">Login</Link>)}
+                {!isLoading && user?.picture ? (<Link href="/profile" className="btn btn-circle border-1 border-neutral-content"><Image src={user.picture} className="w-full rounded-full" width={100} height={100}alt='avatar' /></Link>) : (<Link href="/api/auth/login" prefetch={false} className="btn btn-circle btn-accent">Login</Link>)}
             </div>
 
 
