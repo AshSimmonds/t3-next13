@@ -19,6 +19,7 @@
     "@trpc/next": "10.0.0-rc.0",
     "@trpc/react-query": "10.0.0-rc.0",
     "@trpc/server": "10.0.0-rc.0",
+    "@xstate/react": "^3.0.1",
     "daisyui": "^2.38.0",
     "markdown-it": "^13.0.1",
     "next": "^13.0.3-canary.0",
@@ -28,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.1",
     "superjson": "1.9.1",
+    "xstate": "^4.34.0",
     "zod": "^3.18.0"
   },
   "devDependencies": {
