@@ -2,6 +2,8 @@
 
 // import Head from 'next/head'
 import "../styles/globals.css"
+import "../styles/fancy.css"
+
 import HeaderBar from "./HeaderBar"
 import FooterBar from "./FooterBar";
 import { UserProvider } from '@auth0/nextjs-auth0';

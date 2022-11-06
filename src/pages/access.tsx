@@ -149,6 +149,29 @@ const AccessPage: NextPage = () => {
 
 
 
+
+
+
+                <AccessCard title="Toggle DATA" >
+
+
+                    <div>
+                        <div className="checkbox-wrapper-55">
+                            <label className="rocker rocker-small">
+                                <input type="checkbox" />
+                                <span className="switch-left">Yes</span>
+                                <span className="switch-right">No</span>
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                </AccessCard>
+
+
+
+
             </div>
 
 
