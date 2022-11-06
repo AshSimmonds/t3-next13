@@ -9,7 +9,6 @@ const airtableAsdfTable = "asdf"
 
 const asdfFetchUrl = airtableBaseUrl + airtableAsdfTable
 
-
 export const exampleRouter = router({
     hello: publicProcedure
         .input(z.object({ text: z.string().nullish() }).nullish())
@@ -74,24 +73,29 @@ export const exampleRouter = router({
 
 
     canAccessDatabaseWritePublic: publicProcedure.query(() => {
-        return postToAirtableAsBoolean(undefined, "example.ts | canAccessDatabaseWritePublic")
+        return postToAirtableFetchAsBoolean(undefined, undefined, "example.ts | canAccessDatabaseWritePublic")
     }),
 
-
     canAccessDatabaseWriteRegistered: protectedProcedure.query(({ ctx }) => {
-        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWriteRegistered")
+        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWriteRegistered")
     }),
 
     canAccessDatabaseWritePremium: premiumProcedure.query(({ ctx }) => {
-        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWritePremium")
+        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWritePremium")
     }),
 
     canAccessDatabaseWritePower: powerProcedure.query(({ ctx }) => {
-        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWritePower")
+        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWritePower")
     }),
 
     canAccessDatabaseWriteAdmin: adminProcedure.query(({ ctx }) => {
-        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWriteAdmin")
+        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWriteAdmin")
+    }),
+
+
+
+    canAccessDatabaseTogglePublic: publicProcedure.query(() => {
+        return postToAirtableFetchAsBoolean(undefined, 1, "example.ts | canAccessDatabaseTogglePublic")
     }),
 
 
@@ -170,9 +174,10 @@ async function fetchFromAirtableAsBoolean(userId: string | undefined = undefined
 
 
 
-async function postToAirtableAsBoolean(userId: string | undefined = undefined, extraModifiedContext: string | undefined = undefined) {
+async function postToAirtableFetchAsBoolean(userId: string | undefined = undefined, toggleFavourite: number | undefined, extraModifiedContext: string | undefined = undefined) {
 
     // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
+    const rightMeow = new Date().toISOString()
 
     const airtableCurrentResult = await fetchFromAirtable(userId)
         .then((resultJson) => {
@@ -188,7 +193,9 @@ async function postToAirtableAsBoolean(userId: string | undefined = undefined, e
 
                 // console.log(`postToAirtableAsBoolean resultJson.records: ${JSON.stringify(resultJson.records, null, 4)}`)
 
-                const isNowFavourite = !resultJson.records[0].fields.favourite
+                let isNowFavourite = resultJson.records[0].fields.favourite
+
+                isNowFavourite = toggleFavourite ? !isNowFavourite : isNowFavourite
 
                 const userMetaData = {
                     "records": [
@@ -196,7 +203,7 @@ async function postToAirtableAsBoolean(userId: string | undefined = undefined, e
                             "id": resultJson.records[0].fields.record_id,
                             "fields": {
                                 "favourite": isNowFavourite,
-                                "modified_context": "postToAirtableAsBoolean | " + extraModifiedContext
+                                "modified_context": rightMeow + " | " + extraModifiedContext + " | postToAirtableAsBoolean"
                             }
                         }
                     ]
