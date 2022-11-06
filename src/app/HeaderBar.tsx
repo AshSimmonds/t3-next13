@@ -1,11 +1,17 @@
 'use client';
 
 import { useUser } from '@auth0/nextjs-auth0'
-
+import Image from 'next/image'
+import Link from 'next/link';
 
 function HeaderBar() {
 
     const { user, error, isLoading } = useUser()
+
+    if (error) {
+        console.log(`HeaderBar Error: ${JSON.stringify(error, null, 4)}`)
+        return <div>Error... {error.message}</div>
+    }
 
     return (
         <div className="navbar bg-base-100 bg-gradient-to-b from-base-100 via-base-100 to-base-200 shadow-xl border-b-2 border-primary border-opacity-10 mb-4">
@@ -15,7 +21,7 @@ function HeaderBar() {
 
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
-                    <li><a href="/asdf">asdf</a></li>
+                    <li><Link href="/asdf">asdf</Link></li>
                     {/* <li tabIndex={0}>
                         <Link href="/linktwo">
                             Parent
@@ -34,7 +40,7 @@ function HeaderBar() {
                 {/* <div className="mr-4 mt-2"><ThemeChanger /></div> */}
 
 
-                {!isLoading && user?.picture ? (<a href="/profile" className="btn btn-circle border-1 border-neutral-content"><img src={user.picture} className="w-full rounded-full" alt='avatar' /></a>) : (<a href="/api/auth/login" className="btn btn-circle btn-accent">Login</a>)}
+                {!isLoading && user?.picture ? (<Link href="/profile" className="btn btn-circle border-1 border-neutral-content"><Image src={user.picture} className="w-full rounded-full" width={100} height={100}alt='avatar' /></Link>) : (<Link href="/api/auth/login" className="btn btn-circle btn-accent">Login</Link>)}
             </div>
 
 

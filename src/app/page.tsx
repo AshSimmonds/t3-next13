@@ -2,6 +2,7 @@
 
 // TODO: 20221106 - causing runtime error, undefined 'call', use <a> for now
 import Link from "next/link"
+// import Image from 'next/image'
 import { Fragment } from "react";
 
 function HomePage() {

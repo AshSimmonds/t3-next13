@@ -1,9 +1,9 @@
 import Head from "next/head"
-import React from 'react'
-import { UserProfile, withPageAuthRequired } from '@auth0/nextjs-auth0'
+// import React from 'react'
+// import { UserProfile, withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { useUser } from '@auth0/nextjs-auth0'
 import { trpc } from "../utils/trpc"
-import { NextPage } from "next"
+import { type NextPage } from "next"
 
 // type ProfileProps = { user: UserProfile }
 
