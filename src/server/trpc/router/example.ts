@@ -74,12 +74,12 @@ export const exampleRouter = router({
 
 
     canAccessDatabaseWritePublic: publicProcedure.query(() => {
-        return postToAirtableAsBoolean()
+        return postToAirtableAsBoolean(undefined, "example.ts | canAccessDatabaseWritePublic")
     }),
 
 
     canAccessDatabaseWriteRegistered: protectedProcedure.query(({ ctx }) => {
-        return postToAirtableAsBoolean(ctx.session.user.sub)
+        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWriteRegistered")
     }),
 
 
@@ -158,7 +158,7 @@ async function fetchFromAirtableAsBoolean(userId: string | undefined = undefined
 
 
 
-async function postToAirtableAsBoolean(userId: string | undefined = undefined) {
+async function postToAirtableAsBoolean(userId: string | undefined = undefined, extraModifiedContext: string | undefined = undefined) {
 
     // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
 
@@ -183,7 +183,8 @@ async function postToAirtableAsBoolean(userId: string | undefined = undefined) {
                         {
                             "id": resultJson.records[0].fields.record_id,
                             "fields": {
-                                "favourite": isNowFavourite
+                                "favourite": isNowFavourite,
+                                "modified_context": "postToAirtableAsBoolean | " + extraModifiedContext
                             }
                         }
                     ]

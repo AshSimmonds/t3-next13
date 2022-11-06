@@ -45,6 +45,7 @@ const AccessPage: NextPage = () => {
 
 
     const accessLevelDataWritePublic = trpc.example.canAccessDatabaseWritePublic.useQuery()
+    const accessLevelDataWriteRegistered = trpc.example.canAccessDatabaseWriteRegistered.useQuery()
 
 
     return (
@@ -125,19 +126,19 @@ const AccessPage: NextPage = () => {
 
                     <ul>
                         <li><>
-                            Guest: {accessLevelDataWritePublic.isFetching ? 'fetching...' : (accessLevelDataWritePublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                            Guest: {accessLevelDataWritePublic.isFetching ? 'writing...' : (accessLevelDataWritePublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Registered: {accessLevelDataWriteRegistered.isFetching ? 'writing...' : (accessLevelDataRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         {/* <li><>
-                            Registered: {accessLevelDataRegistered.isFetching ? 'fetching...' : (accessLevelDataRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                            Premium: {accessLevelDataWritePremium.isFetching ? 'fetching...' : (accessLevelDataWritePremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         <li><>
-                            Premium: {accessLevelDataPremium.isFetching ? 'fetching...' : (accessLevelDataPremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                            Power: {accessLevelDataWritePower.isFetching ? 'fetching...' : (accessLevelDataWritePower.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         <li><>
-                            Power: {accessLevelDataPower.isFetching ? 'fetching...' : (accessLevelDataPower.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                        </></li>
-                        <li><>
-                            Admin: {accessLevelDataAdmin.isFetching ? 'fetching...' : (accessLevelDataAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                            Admin: {accessLevelDataWriteAdmin.isFetching ? 'fetching...' : (accessLevelDataWriteAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li> */}
                     </ul>
 
