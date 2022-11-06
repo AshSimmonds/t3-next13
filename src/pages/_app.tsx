@@ -2,7 +2,7 @@
 import "../styles/globals.css"
 import type { AppType } from "next/dist/shared/lib/utils"
 import { trpc } from "../utils/trpc"
-import Layout from "./layout/Layout"
+import LayoutOld from "./layout/Layout-old"
 import { UserProvider } from '@auth0/nextjs-auth0';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
@@ -10,11 +10,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     return (
 
         <UserProvider>
-            <Layout>
+            <LayoutOld>
 
                 <Component {...pageProps} />
 
-            </Layout>
+            </LayoutOld>
         </UserProvider>
 
     )

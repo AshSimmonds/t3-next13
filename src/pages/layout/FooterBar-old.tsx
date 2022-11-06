@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-function FooterBar() {
+function FooterBarOld() {
 
     return (
 
@@ -10,7 +10,7 @@ function FooterBar() {
         ">
             <div >
                 <Link href={"/asdf"}>asdf</Link>
-                <Link href={"/index-old"}>Home</Link>
+                <Link href={"/"}>Home</Link>
             </div>
         </footer>
 
@@ -18,4 +18,4 @@ function FooterBar() {
 
 }
 
-export default FooterBar
+export default FooterBarOld

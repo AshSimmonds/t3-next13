@@ -6,6 +6,9 @@ import HeaderBar from "./HeaderBar"
 import FooterBar from "./FooterBar";
 import { UserProvider } from '@auth0/nextjs-auth0';
 
+// TODO: appDir not ready for prod yet, does not do TRPC, so only good for static pages
+console.log(`EXPERIMENTAL NextJS appDir: Layout()`)
+
 export default function RootLayout({
     children,
 }: {

@@ -29,15 +29,15 @@ const ThemeChanger = () => {
 }
 
 
-function HeaderBar() {
+function HeaderBarOld() {
     const { user, error, isLoading } = useUser()
     // const { theme, setTheme } = useTheme()
 
     // const fallbackTheme = !theme ? 'ashlight' : theme
 
-    if(error) {
-        console.log(`HeaderBar error: ${error}`)
-        
+    if (error) {
+        console.log(`HeaderBarOld error: ${error}`)
+
         return <div>Error: {error.message}</div>
     }
 
@@ -67,7 +67,7 @@ function HeaderBar() {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
-                    {/* <li><Link href="/playlist">Playlists</Link></li> */}
+                    <li><Link href="/asdf">PAGES</Link></li>
                     {/* <li tabIndex={0}>
                         <Link href="/linktwo">
                             Parent
@@ -93,4 +93,4 @@ function HeaderBar() {
 }
 
 
-export default HeaderBar
+export default HeaderBarOld

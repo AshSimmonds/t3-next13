@@ -2,6 +2,9 @@ import Link from "next/link";
 
 function FooterBar() {
 
+    // TODO: appDir not ready for prod yet, does not do TRPC, so only good for static pages
+    console.log(`EXPERIMENTAL NextJS appDir: FooterBar()`)
+
     return (
 
         <footer className="footer footer-center p-4 mt-4 text-base-content

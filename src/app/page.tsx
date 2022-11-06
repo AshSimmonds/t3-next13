@@ -7,6 +7,9 @@ import { Fragment } from "react";
 
 function HomePage() {
 
+    // TODO: appDir not ready for prod yet, does not do TRPC, so only good for static pages
+    console.log(`EXPERIMENTAL NextJS appDir: HomePage()`)
+
     const buttonList = [
         {
             "buttonText": "About",

@@ -6,6 +6,9 @@ import Link from 'next/link';
 
 function HeaderBar() {
 
+    // TODO: appDir not ready for prod yet, does not do TRPC, so only good for static pages
+    console.log(`EXPERIMENTAL NextJS appDir: HeaderBar()`)
+
     const { user, error, isLoading } = useUser()
 
     if (error) {
@@ -16,12 +19,12 @@ function HeaderBar() {
     return (
         <div className="navbar bg-base-100 bg-gradient-to-b from-base-100 via-base-100 to-base-200 shadow-xl border-b-2 border-primary border-opacity-10 mb-4">
             <div className="navbar-start">
-                <a href="/" ><img src={`/blue_dwarf_space_long_logo-undefined.png`} alt="Blue Dwarf Space logo" className="max-h-12 max-w-36 cursor-pointer" /></a>
+                <Link href="/" ><img src={`/blue_dwarf_space_long_logo-undefined.png`} alt="Blue Dwarf Space logo" className="max-h-12 max-w-36 cursor-pointer" /></Link>
             </div>
 
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
-                    <li><Link href="/asdf">asdf</Link></li>
+                    <li><Link href="/asdf">EXPERIMENTAL</Link></li>
                     {/* <li tabIndex={0}>
                         <Link href="/linktwo">
                             Parent
