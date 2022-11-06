@@ -1,11 +1,11 @@
 import Document, {
-    DocumentContext,
-    DocumentInitialProps,
+    type DocumentContext,
+    type DocumentInitialProps,
     Html,
     Head,
     Main,
     NextScript
-} from 'next/document';
+} from 'next/document'
 
 
 class TheDocument extends Document {
@@ -37,8 +37,8 @@ class TheDocument extends Document {
                 </body>
 
             </Html>
-        );
+        )
     }
 }
 
-export default TheDocument;
+export default TheDocument

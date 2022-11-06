@@ -1,26 +1,25 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import { trpc } from "../utils/trpc"
 
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useUser } from "@auth0/nextjs-auth0";
-import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { useUser } from "@auth0/nextjs-auth0"
+import { useState } from "react"
 
 
 
 const ReactHookFormPage: NextPage = () => {
-    const { user, error, isLoading } = useUser()
+    // const { user, error, isLoading } = useUser()
 
-    if (error) {
-        console.log(`ReactHookFormPage user object error: ${error}`)
+    // if (error) {
+    //     console.log(`ReactHookFormPage user object error: ${error}`)
 
-        return <div>
-            error: {error.message}
-            <pre>
-                {JSON.stringify(error, null, 4)}
-            </pre>
-        </div>
-    }
+    //     return <div>
+    //         error: {error.message}
+    //         <pre>
+    //             {JSON.stringify(error, null, 4)}
+    //         </pre>
+    //     </div>
+    // }
 
 
     // const zxcv = trpc.video.asdfGetUserStuff.useQuery()
@@ -71,7 +70,7 @@ function ExampleForm(formData: any) {
                 asdfContent: formData.content,
             }
         }
-    );
+    )
 
 
 
@@ -128,7 +127,7 @@ function ExampleForm(formData: any) {
                 <input type="submit" className="btn bg-opacity-20 mt-4" />
             </div>
         </form>
-    );
+    )
 }
 
 

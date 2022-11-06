@@ -8,6 +8,10 @@ import { useUser } from '@auth0/nextjs-auth0'
 const ThemeChanger = () => {
     const { theme, setTheme } = useTheme()
 
+    if (!theme) {
+        // TODO: who cares? NextJS 13 changed stuff, not sure how to deal with it yet
+    }
+
     return (
         <>
             <label className="swap swap-rotate">
@@ -27,9 +31,15 @@ const ThemeChanger = () => {
 
 function HeaderBar() {
     const { user, error, isLoading } = useUser()
-    const { theme, setTheme } = useTheme()
+    // const { theme, setTheme } = useTheme()
 
-    const fallbackTheme = !theme ? 'ashlight' : theme
+    // const fallbackTheme = !theme ? 'ashlight' : theme
+
+    if(error) {
+        console.log(`HeaderBar error: ${error}`)
+        
+        return <div>Error: {error.message}</div>
+    }
 
     return (
         <div className="navbar bg-base-100 bg-gradient-to-b from-base-100 via-base-100 to-base-200 shadow-xl border-b-2 border-primary border-opacity-10 mb-4">

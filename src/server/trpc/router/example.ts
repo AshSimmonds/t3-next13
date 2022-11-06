@@ -22,23 +22,26 @@ export const exampleRouter = router({
     // }),
 
 
-    canAccessBackendPublic: publicProcedure.query(({ ctx }) => {
+    // TODO: figure out whether ctx is ever needed this high up, removing now to not clog up linter with unused vars
+
+    // canAccessBackendPublic: publicProcedure.query(({ ctx }) => {
+    canAccessBackendPublic: publicProcedure.query(() => {
         return true;
     }),
 
-    canAccessBackendRegistered: protectedProcedure.query(({ ctx }) => {
+    canAccessBackendRegistered: protectedProcedure.query(() => {
         return true;
     }),
 
-    canAccessBackendPremium: premiumProcedure.query(({ ctx }) => {
+    canAccessBackendPremium: premiumProcedure.query(() => {
         return true;
     }),
 
-    canAccessBackendPower: powerProcedure.query(({ ctx }) => {
+    canAccessBackendPower: powerProcedure.query(() => {
         return true;
     }),
 
-    canAccessBackendAdmin: adminProcedure.query(({ ctx }) => {
+    canAccessBackendAdmin: adminProcedure.query(() => {
         return true;
     }),
 
@@ -46,23 +49,23 @@ export const exampleRouter = router({
 
 
 
-    canAccessDatabasePublic: publicProcedure.query(async ({ ctx }) => {
+    canAccessDatabasePublic: publicProcedure.query(async () => {
         return fetchFromAirtableAsBoolean()
     }),
 
-    canAccessDatabaseRegistered: protectedProcedure.query(async ({ ctx }) => {
+    canAccessDatabaseRegistered: protectedProcedure.query(async () => {
         return fetchFromAirtableAsBoolean()
     }),
 
-    canAccessDatabasePremium: premiumProcedure.query(async ({ ctx }) => {
+    canAccessDatabasePremium: premiumProcedure.query(async () => {
         return fetchFromAirtableAsBoolean()
     }),
 
-    canAccessDatabasePower: powerProcedure.query(async ({ ctx }) => {
+    canAccessDatabasePower: powerProcedure.query(async () => {
         return fetchFromAirtableAsBoolean()
     }),
 
-    canAccessDatabaseAdmin: adminProcedure.query(async ({ ctx }) => {
+    canAccessDatabaseAdmin: adminProcedure.query(async () => {
         return fetchFromAirtableAsBoolean()
     }),
 
@@ -95,7 +98,7 @@ async function fetchFromAirtable() {
 async function fetchFromAirtableAsBoolean() {
 
     const airtableResult = await fetchFromAirtable()
-        .then((resultJson: { error: { message: string | undefined; }; records: any; }) => {
+        .then((resultJson: { error: { message: string | undefined; }; records: []; }) => {
 
             // console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
 
@@ -109,8 +112,8 @@ async function fetchFromAirtableAsBoolean() {
             }
 
             return false
-        }).catch((error: any) => {
-            // console.log(`canAccessDatabasePublic error: ${JSON.stringify(error, null, 4)}`)
+        }).catch((error: Error) => {
+            console.log(`fetchFromAirtableAsBoolean error: ${JSON.stringify(error, null, 4)}`)
             return false
         })
 

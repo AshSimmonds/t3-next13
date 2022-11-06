@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { ScriptProps } from 'next/script'
-import { PropsWithChildren } from 'react'
+import { type ScriptProps } from 'next/script'
+import { type PropsWithChildren } from 'react'
 import HeaderBar from './HeaderBar'
 import FooterBar from './FooterBar'
 import { ThemeProvider } from 'next-themes'
