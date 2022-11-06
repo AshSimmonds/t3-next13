@@ -44,6 +44,9 @@ const AccessPage: NextPage = () => {
     const accessLevelDataAdmin = trpc.example.canAccessDatabaseAdmin.useQuery()
 
 
+    const accessLevelDataWritePublic = trpc.example.canAccessDatabaseWritePublic.useQuery()
+
+
     return (
         <>
             <Head>
@@ -95,7 +98,7 @@ const AccessPage: NextPage = () => {
 
                 </AccessCard>
 
-                <AccessCard title="Back-end DATA" >
+                <AccessCard title="Back-end DATA read" >
 
                     <ul>
                         <li><>
@@ -116,6 +119,31 @@ const AccessPage: NextPage = () => {
                     </ul>
 
                 </AccessCard>
+
+
+                <AccessCard title="Back-end DATA write" >
+
+                    <ul>
+                        <li><>
+                            Guest: {accessLevelDataWritePublic.isFetching ? 'fetching...' : (accessLevelDataWritePublic.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        {/* <li><>
+                            Registered: {accessLevelDataRegistered.isFetching ? 'fetching...' : (accessLevelDataRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Premium: {accessLevelDataPremium.isFetching ? 'fetching...' : (accessLevelDataPremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Power: {accessLevelDataPower.isFetching ? 'fetching...' : (accessLevelDataPower.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li>
+                        <li><>
+                            Admin: {accessLevelDataAdmin.isFetching ? 'fetching...' : (accessLevelDataAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
+                        </></li> */}
+                    </ul>
+
+                </AccessCard>
+
+
 
             </div>
 

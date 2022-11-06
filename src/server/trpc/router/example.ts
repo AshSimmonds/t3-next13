@@ -53,23 +53,33 @@ export const exampleRouter = router({
         return fetchFromAirtableAsBoolean()
     }),
 
-    canAccessDatabaseRegistered: protectedProcedure.query(async () => {
-        return fetchFromAirtableAsBoolean()
+    canAccessDatabaseRegistered: protectedProcedure.query( ({ ctx }) => {
+        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
-    canAccessDatabasePremium: premiumProcedure.query(async () => {
-        return fetchFromAirtableAsBoolean()
+    canAccessDatabasePremium: premiumProcedure.query( ({ ctx }) => {
+        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
-    canAccessDatabasePower: powerProcedure.query(async () => {
-        return fetchFromAirtableAsBoolean()
+    canAccessDatabasePower: powerProcedure.query( ({ ctx }) => {
+        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
-    canAccessDatabaseAdmin: adminProcedure.query(async () => {
-        return fetchFromAirtableAsBoolean()
+    canAccessDatabaseAdmin: adminProcedure.query( ({ ctx }) => {
+        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
 
+
+
+    canAccessDatabaseWritePublic: publicProcedure.query( () => {
+        return postToAirtableAsBoolean()
+    }),
+
+
+    canAccessDatabaseWriteRegistered: protectedProcedure.query( ({ ctx }) => {
+        return postToAirtableAsBoolean(ctx.session.user.sub)
+    }),
 
 
 });
@@ -77,11 +87,14 @@ export const exampleRouter = router({
 
 
 
-async function fetchFromAirtable() {
 
-    const fetchUrl = airtableBaseUrl + airtableAsdfTable
 
-    // console.log(`canAccessDatabasePublic fetchUrl: ${fetchUrl}`)
+
+async function fetchFromAirtable(userId: string | undefined = undefined) {
+
+    const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
+
+    const fetchUrl = airtableBaseUrl + airtableAsdfTable + filterFormula
 
     const fetchResult = await fetch(fetchUrl, {
         method: "GET",
@@ -90,14 +103,63 @@ async function fetchFromAirtable() {
             "Content-Type": "application/json"
         }
     }).then(airtableResult => airtableResult.json())
+        .then(async airtableJson => {
+            if (airtableJson.records.length > 0) {
+                return airtableJson
+            } else {
+                const newAirtableData = await createUserAsdfData(userId ? userId : 'asdf')
+
+                // console.log(`fetchFromAirtable newAirtableData: ${JSON.stringify(newAirtableData, null, 4)}`)
+
+                return newAirtableData
+            }
+        }).catch((error: Error) => {
+            console.error(`fetchFromAirtable error: ${error}`)
+            return false
+        })
 
     return fetchResult
 }
 
 
-async function fetchFromAirtableAsBoolean() {
 
-    const airtableResult = await fetchFromAirtable()
+
+
+
+
+async function fetchFromAirtableAsBoolean(userId: string | undefined = undefined) {
+
+    const airtableResult = await fetchFromAirtable(userId)
+        .then((resultJson: { error: { message: string | undefined; }; records: []; }) => {
+
+            // console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
+
+            if (resultJson.error) {
+                console.error(`fetchFromAirtableAsBoolean resultJson.error: ${JSON.stringify(resultJson.error, null, 4)}`)
+                throw new Error(resultJson.error.message)
+            }
+
+            if (resultJson.records) {
+                return true
+            }
+
+            return false
+        }).catch((error: Error) => {
+            console.error(`fetchFromAirtableAsBoolean error: ${JSON.stringify(error, null, 4)}`)
+            return false
+        })
+
+
+    return airtableResult
+
+}
+
+
+
+
+async function postToAirtableAsBoolean(userId: string | undefined = undefined) {
+
+    const airtableCurrentResult = await fetchFromAirtable(userId)
         .then((resultJson: { error: { message: string | undefined; }; records: []; }) => {
 
             // console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
@@ -118,7 +180,42 @@ async function fetchFromAirtableAsBoolean() {
         })
 
 
-    return airtableResult
+    return airtableCurrentResult
 
+}
+
+
+
+
+
+
+
+function createUserAsdfData(userId: string) {
+
+    const fetchUrl = airtableBaseUrl + airtableAsdfTable
+
+    const asdfUserMetaData = {
+        "records": [
+            {
+                "fields": {
+                    "user_id": userId,
+                    "title": "new title",
+                    "content": "new content",
+                }
+            }]
+    }
+
+    return fetch(fetchUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${airtableApiKey}`,
+        },
+        body: JSON.stringify(asdfUserMetaData)
+
+    }).then(response => response.json()).then(theData => {
+
+        return theData
+    })
 
 }
