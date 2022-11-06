@@ -50,52 +50,61 @@ export const exampleRouter = router({
 
 
     canAccessDatabasePublic: publicProcedure.query(async () => {
-        return fetchFromAirtableAsBoolean()
+        return _fetchFromAirtableAsBoolean()
     }),
 
     canAccessDatabaseRegistered: protectedProcedure.query(({ ctx }) => {
-        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
+        return _fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
     canAccessDatabasePremium: premiumProcedure.query(({ ctx }) => {
-        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
+        return _fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
     canAccessDatabasePower: powerProcedure.query(({ ctx }) => {
-        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
+        return _fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
     canAccessDatabaseAdmin: adminProcedure.query(({ ctx }) => {
-        return fetchFromAirtableAsBoolean(ctx.session.user.sub)
+        return _fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
 
 
 
     canAccessDatabaseWritePublic: publicProcedure.query(() => {
-        return postToAirtableFetchAsBoolean(undefined, undefined, "example.ts | canAccessDatabaseWritePublic")
+        return _postToAirtableFetchAsBoolean(undefined, undefined, "example.ts | canAccessDatabaseWritePublic")
     }),
 
     canAccessDatabaseWriteRegistered: protectedProcedure.query(({ ctx }) => {
-        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWriteRegistered")
+        return _postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWriteRegistered")
     }),
 
     canAccessDatabaseWritePremium: premiumProcedure.query(({ ctx }) => {
-        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWritePremium")
+        return _postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWritePremium")
     }),
 
     canAccessDatabaseWritePower: powerProcedure.query(({ ctx }) => {
-        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWritePower")
+        return _postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWritePower")
     }),
 
     canAccessDatabaseWriteAdmin: adminProcedure.query(({ ctx }) => {
-        return postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWriteAdmin")
+        return _postToAirtableFetchAsBoolean(ctx.session.user.sub, undefined, "example.ts | canAccessDatabaseWriteAdmin")
     }),
 
 
 
-    canAccessDatabaseTogglePublic: publicProcedure.query(() => {
-        return postToAirtableFetchAsBoolean(undefined, 1, "example.ts | canAccessDatabaseTogglePublic")
+    getFavourite: protectedProcedure.query(({ ctx }) => {
+        return _getFavourite(ctx.session.user.sub)
+    }),
+
+    toggleFavourite: protectedProcedure.query(({ ctx }) => {
+        const isFavourite = _postToAirtableFetchAsBoolean(ctx.session.user.sub, 1, "example.ts | favouriteToggle")
+        .then(() => {
+            return _getFavourite(ctx.session.user.sub)
+        })
+
+        return isFavourite
     }),
 
 
@@ -107,7 +116,12 @@ export const exampleRouter = router({
 
 
 
-async function fetchFromAirtable(userId: string | undefined = undefined) {
+
+
+
+// TODO: move these to a separate file
+
+async function _fetchFromAirtable(userId: string | undefined = undefined) {
 
     const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
 
@@ -124,7 +138,7 @@ async function fetchFromAirtable(userId: string | undefined = undefined) {
             if (airtableJson.records.length > 0) {
                 return airtableJson
             } else {
-                const newAirtableData = await createUserAsdfData(userId ? userId : 'asdf')
+                const newAirtableData = await _createUserAsdfData(userId ? userId : 'asdf')
 
                 // console.log(`fetchFromAirtable newAirtableData: ${JSON.stringify(newAirtableData, null, 4)}`)
 
@@ -144,9 +158,9 @@ async function fetchFromAirtable(userId: string | undefined = undefined) {
 
 
 
-async function fetchFromAirtableAsBoolean(userId: string | undefined = undefined) {
+async function _fetchFromAirtableAsBoolean(userId: string | undefined = undefined) {
 
-    const airtableResult = await fetchFromAirtable(userId)
+    const airtableResult = await _fetchFromAirtable(userId)
         .then((resultJson: { error: { message: string | undefined; }; records: []; }) => {
 
             // console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
@@ -174,12 +188,12 @@ async function fetchFromAirtableAsBoolean(userId: string | undefined = undefined
 
 
 
-async function postToAirtableFetchAsBoolean(userId: string | undefined = undefined, toggleFavourite: number | undefined, extraModifiedContext: string | undefined = undefined) {
+async function _postToAirtableFetchAsBoolean(userId: string | undefined = undefined, toggleFavourite: number | undefined, extraModifiedContext: string | undefined = undefined) {
 
     // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
-    const rightMeow = new Date().toISOString()
+    const rightMeow = new Date().toLocaleString() 
 
-    const airtableCurrentResult = await fetchFromAirtable(userId)
+    const airtableCurrentResult = await _fetchFromAirtable(userId)
         .then((resultJson) => {
 
             // console.log(`postToAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
@@ -248,7 +262,7 @@ async function postToAirtableFetchAsBoolean(userId: string | undefined = undefin
 
 
 
-function createUserAsdfData(userId: string) {
+function _createUserAsdfData(userId: string) {
 
     const fetchUrl = airtableBaseUrl + airtableAsdfTable
 
@@ -275,5 +289,22 @@ function createUserAsdfData(userId: string) {
 
         return theData
     })
+
+}
+
+
+
+
+function _getFavourite(userId: string) {
+
+    const isFavourite = _fetchFromAirtable(userId)
+    .then((resultJson) => {
+        return resultJson.records[0].fields.favourite
+    }).catch((error: Error) => {
+        console.error(`getFavourite error: ${error}`)
+        return false
+    })
+
+    return isFavourite
 
 }
