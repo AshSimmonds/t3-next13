@@ -13,6 +13,9 @@ const config = {
         locales: ["en"],
         defaultLocale: "en",
     },
+    images: {
+        domains: ['s.gravatar.com'],
+    },
     experimental: { appDir: true },
 };
 export default config;
