@@ -82,6 +82,18 @@ export const exampleRouter = router({
         return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWriteRegistered")
     }),
 
+    canAccessDatabaseWritePremium: premiumProcedure.query(({ ctx }) => {
+        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWritePremium")
+    }),
+
+    canAccessDatabaseWritePower: powerProcedure.query(({ ctx }) => {
+        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWritePower")
+    }),
+
+    canAccessDatabaseWriteAdmin: adminProcedure.query(({ ctx }) => {
+        return postToAirtableAsBoolean(ctx.session.user.sub, "example.ts | canAccessDatabaseWriteAdmin")
+    }),
+
 
 });
 

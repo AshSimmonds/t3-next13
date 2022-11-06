@@ -46,6 +46,9 @@ const AccessPage: NextPage = () => {
 
     const accessLevelDataWritePublic = trpc.example.canAccessDatabaseWritePublic.useQuery()
     const accessLevelDataWriteRegistered = trpc.example.canAccessDatabaseWriteRegistered.useQuery()
+    const accessLevelDataWritePremium = trpc.example.canAccessDatabaseWritePremium.useQuery()
+    const accessLevelDataWritePower = trpc.example.canAccessDatabaseWritePower.useQuery()
+    const accessLevelDataWriteAdmin = trpc.example.canAccessDatabaseWriteAdmin.useQuery()
 
 
     return (
@@ -131,7 +134,7 @@ const AccessPage: NextPage = () => {
                         <li><>
                             Registered: {accessLevelDataWriteRegistered.isFetching ? 'writing...' : (accessLevelDataRegistered.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
-                        {/* <li><>
+                        <li><>
                             Premium: {accessLevelDataWritePremium.isFetching ? 'fetching...' : (accessLevelDataWritePremium.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
                         </></li>
                         <li><>
@@ -139,7 +142,7 @@ const AccessPage: NextPage = () => {
                         </></li>
                         <li><>
                             Admin: {accessLevelDataWriteAdmin.isFetching ? 'fetching...' : (accessLevelDataWriteAdmin.data ? <>{successOutcome}</> : <>{failOutcome}</>)}
-                        </></li> */}
+                        </></li>
                     </ul>
 
                 </AccessCard>
