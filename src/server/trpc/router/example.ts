@@ -7,6 +7,7 @@ const airtableApiKey = process.env.NEXT_PRIVATE_AIRTABLE_API_KEY
 const airtableBaseUrl = "https://api.airtable.com/v0/" + airtableBaseId + "/"
 const airtableAsdfTable = "asdf"
 
+const asdfFetchUrl = airtableBaseUrl + airtableAsdfTable
 
 
 export const exampleRouter = router({
@@ -53,31 +54,31 @@ export const exampleRouter = router({
         return fetchFromAirtableAsBoolean()
     }),
 
-    canAccessDatabaseRegistered: protectedProcedure.query( ({ ctx }) => {
+    canAccessDatabaseRegistered: protectedProcedure.query(({ ctx }) => {
         return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
-    canAccessDatabasePremium: premiumProcedure.query( ({ ctx }) => {
+    canAccessDatabasePremium: premiumProcedure.query(({ ctx }) => {
         return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
-    canAccessDatabasePower: powerProcedure.query( ({ ctx }) => {
+    canAccessDatabasePower: powerProcedure.query(({ ctx }) => {
         return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
-    canAccessDatabaseAdmin: adminProcedure.query( ({ ctx }) => {
+    canAccessDatabaseAdmin: adminProcedure.query(({ ctx }) => {
         return fetchFromAirtableAsBoolean(ctx.session.user.sub)
     }),
 
 
 
 
-    canAccessDatabaseWritePublic: publicProcedure.query( () => {
+    canAccessDatabaseWritePublic: publicProcedure.query(() => {
         return postToAirtableAsBoolean()
     }),
 
 
-    canAccessDatabaseWriteRegistered: protectedProcedure.query( ({ ctx }) => {
+    canAccessDatabaseWriteRegistered: protectedProcedure.query(({ ctx }) => {
         return postToAirtableAsBoolean(ctx.session.user.sub)
     }),
 
@@ -94,7 +95,7 @@ async function fetchFromAirtable(userId: string | undefined = undefined) {
 
     const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
 
-    const fetchUrl = airtableBaseUrl + airtableAsdfTable + filterFormula
+    const fetchUrl = asdfFetchUrl + filterFormula
 
     const fetchResult = await fetch(fetchUrl, {
         method: "GET",
@@ -159,23 +160,60 @@ async function fetchFromAirtableAsBoolean(userId: string | undefined = undefined
 
 async function postToAirtableAsBoolean(userId: string | undefined = undefined) {
 
-    const airtableCurrentResult = await fetchFromAirtable(userId)
-        .then((resultJson: { error: { message: string | undefined; }; records: []; }) => {
+    // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
 
-            // console.log(`fetchFromAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
+    const airtableCurrentResult = await fetchFromAirtable(userId)
+        .then((resultJson) => {
+
+            // console.log(`postToAirtableAsBoolean resultJson: ${JSON.stringify(resultJson, null, 4)}`)
 
             if (resultJson.error) {
-                console.log(`fetchFromAirtableAsBoolean resultJson.error: ${JSON.stringify(resultJson.error, null, 4)}`)
+                console.log(`postToAirtableAsBoolean resultJson.error: ${JSON.stringify(resultJson.error, null, 4)}`)
                 throw new Error(resultJson.error.message)
             }
 
-            if (resultJson.records) {
-                return true
+            if (resultJson.records.length > 0) {
+
+                // console.log(`postToAirtableAsBoolean resultJson.records: ${JSON.stringify(resultJson.records, null, 4)}`)
+
+                const isNowFavourite = !resultJson.records[0].fields.favourite
+
+                const userMetaData = {
+                    "records": [
+                        {
+                            "id": resultJson.records[0].fields.record_id,
+                            "fields": {
+                                "favourite": isNowFavourite
+                            }
+                        }
+                    ]
+                }
+
+                // console.log(`postToAirtableAsBoolean userMetaData: ${JSON.stringify(userMetaData, null, 4)}`)
+
+
+
+                return fetch(asdfFetchUrl, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${airtableApiKey}`,
+                    },
+                    body: JSON.stringify(userMetaData)
+
+                }).then(response => response.json()).then(theData => {
+
+                    // console.log(`postToAirtableAsBoolean theData: ${JSON.stringify(theData, null, 4)}`)
+                    return theData.records.length > 0
+                })
+
+
+                // return true
             }
 
             return false
         }).catch((error: Error) => {
-            console.log(`fetchFromAirtableAsBoolean error: ${JSON.stringify(error, null, 4)}`)
+            console.log(`postToAirtableAsBoolean error: ${error}`)
             return false
         })
 
