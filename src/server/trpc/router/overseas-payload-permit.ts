@@ -36,10 +36,13 @@ export const overseasPayloadPermitRouter = router({
 
 // TODO: move these to a separate file
 
-async function _fetchFromAirtable() {
+async function _fetchFromAirtable(permitId: string | undefined = undefined) {
 
-    const filterFormula = ''
-    // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
+    let filterFormula = ''
+    if (permitId) {
+        // filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
+        filterFormula = encodeURI(`?filterByFormula={record_id}="${permitId}"`)
+    }
 
     const fetchUrl = defaultFetchUrl + filterFormula
 
@@ -60,8 +63,11 @@ async function _fetchFromAirtable() {
             }
         }).catch((error: Error) => {
             console.error(`overseas-payload-permit.ts _fetchFromAirtable error: ${error}`)
-            return false
+            return error
         })
+
+
+
 
 
 

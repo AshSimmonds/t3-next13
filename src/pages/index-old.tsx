@@ -17,7 +17,7 @@ const Home: NextPage = () => {
         },
         {
             "buttonText": "Overseas Payload Permit",
-            "buttonLink": "/opp"
+            "buttonLink": "/opps"
         },
         {
             "buttonText": "zxcv",
