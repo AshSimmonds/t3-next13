@@ -134,14 +134,14 @@ const AccessPage: NextPage = () => {
 
         return (
             <div>
-                <div className="checkbox-wrapper-55">
-                    <label className="rocker rocker-small" >
+                <div className={`checkbox-wrapper-55 ${current.value !== 'idle' ? 'cursor-wait disabled bg-red-500' : ''}`}>
+                    <label className={`rocker rocker-small ${current.value !== 'idle' ? 'cursor-wait disabled bg-red-500' : ''}`}>
                         <input type="checkbox"
                             onChange={() => { send('TOGGLE') }} checked={current.context.isFavourite}
                             disabled={current.value !== 'idle'}
                         />
-                        <span className="switch-left">Yes</span>
-                        <span className="switch-right">No</span>
+                        <span className={`switch-left ${current.value !== 'idle' ? 'cursor-wait disabled' : ''}`}>Yes</span>
+                        <span className={`switch-right ${current.value !== 'idle' ? 'cursor-wait disabled' : ''}`}>No</span>
                     </label>
                 </div>
                 <div>

@@ -28,8 +28,8 @@ export const trpc = createTRPCNext<AppRouter>({
             queryClientConfig: {
                 defaultOptions: {
                     queries: {
-                        staleTime: 1000 * 60 * 5, // 5 minutes
-                        refetchInterval: 1000 * 60 * 5, // 5 minutes
+                        // staleTime: 1000 * 60 * 5, // 5 minutes
+                        // refetchInterval: 1000 * 60 * 5, // 5 minutes
                         refetchOnWindowFocus: true,
                         retry: false,
                     },
