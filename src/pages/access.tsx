@@ -100,7 +100,7 @@ const AccessPage: NextPage = () => {
                             src: "toggleFavourite",
                             onDone: {
                                 target: "idle",
-                                // actions: assign({ isFavourite: (context, event) => event.data })
+                                // actions: assign({ isFavourite: event.data })
                             },
                             onError: {
                                 target: "idle",
@@ -111,17 +111,28 @@ const AccessPage: NextPage = () => {
             }, {
             services: {
                 toggleFavourite: (context, event) => {
-                    console.log(`toggleFavourite BEFORE: ${context.isFavourite}`)
+                    // console.log(`toggleFavourite BEFORE: ${JSON.stringify(context, null, 4)}`)
 
-                    // context.isFavourite = !context.isFavourite
+                    // if (context.isFavourite === undefined) {
+                    //     throw new Error("context.isFavourite is undefined")
+                    // }
+
+                    context ? context.isFavourite = !context.isFavourite : ''
 
                     const newFavourite = example.toggleFavourite.fetch().then((isNowFavourite) => {
+                        
+                        if (isNowFavourite === undefined) {
+                            throw new Error('isNowFavourite is undefined')
+                            // return 
+                        }
                         context.isFavourite = isNowFavourite
+                        // console.log(`toggleFavourite AFTER: ${context.isFavourite}`)
+
+                        return isNowFavourite
                     })
 
-                    console.log(`toggleFavourite AFTER: ${context.isFavourite}`)
-
                     return newFavourite
+
                 },
             },
 

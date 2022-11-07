@@ -94,15 +94,22 @@ export const exampleRouter = router({
 
 
 
-    getFavourite: protectedProcedure.query(({ ctx }) => {
-        return _getFavourite(ctx.session.user.sub)
+    getFavourite: protectedProcedure.query(async ({ ctx }) => {
+
+        // console.log(`example.ts | getFavourite | ctx.session.user.sub: ${ctx.session.user.sub}`)
+
+        const theFavourite = await _getFavourite(ctx.session.user.sub)
+
+        // console.log(`example.ts | getFavourite | theFavourite: ${theFavourite}`)
+
+        return theFavourite
     }),
 
     toggleFavourite: protectedProcedure.query(({ ctx }) => {
         const isFavourite = _postToAirtableFetchAsBoolean(ctx.session.user.sub, 1, "example.ts | favouriteToggle")
-        .then(() => {
-            return _getFavourite(ctx.session.user.sub)
-        })
+            .then(() => {
+                return _getFavourite(ctx.session.user.sub)
+            })
 
         return isFavourite
     }),
@@ -149,6 +156,16 @@ async function _fetchFromAirtable(userId: string | undefined = undefined) {
             return false
         })
 
+
+    // console.log(`fetchFromAirtable fetchResult: ${JSON.stringify(fetchResult, null, 4)}`)
+
+    // Airtable doesn't return false booleans, so it comes through as undefined, real fucking helpful
+    if (!fetchResult.records[0].fields.favourite) {
+        fetchResult.records[0].fields.favourite = false
+    }
+
+    // console.log(`fetchFromAirtable fetchResult: ${JSON.stringify(fetchResult, null, 4)}`)
+
     return fetchResult
 }
 
@@ -191,7 +208,7 @@ async function _fetchFromAirtableAsBoolean(userId: string | undefined = undefine
 async function _postToAirtableFetchAsBoolean(userId: string | undefined = undefined, toggleFavourite: number | undefined, extraModifiedContext: string | undefined = undefined) {
 
     // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
-    const rightMeow = new Date().toLocaleString() 
+    const rightMeow = new Date().toLocaleString()
 
     const airtableCurrentResult = await _fetchFromAirtable(userId)
         .then((resultJson) => {
@@ -298,12 +315,13 @@ function _createUserAsdfData(userId: string) {
 function _getFavourite(userId: string) {
 
     const isFavourite = _fetchFromAirtable(userId)
-    .then((resultJson) => {
-        return resultJson.records[0].fields.favourite
-    }).catch((error: Error) => {
-        console.error(`getFavourite error: ${error}`)
-        return false
-    })
+        .then((resultJson) => {
+            // console.log(`_getFavourite resultJson.records[0].fields.favourite: ${JSON.stringify(resultJson.records[0].fields.favourite, null, 4)}`)
+            return resultJson.records[0].fields.favourite ? true : false
+        }).catch((error: Error) => {
+            console.error(`getFavourite error: ${error}`)
+            return false
+        })
 
     return isFavourite
 
