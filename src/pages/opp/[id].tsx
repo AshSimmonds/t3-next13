@@ -4,6 +4,7 @@ import { NextPage } from "next"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { trpc } from "../../utils/trpc"
+import { compress, decompress } from "compress-json"
 
 
 
@@ -59,8 +60,41 @@ const OverseasPayloadPermitPage: NextPage = () => {
     }
 
 
-    console.log(`OverseasPayloadPermitPage thePermit: ${JSON.stringify(thePermit, null, 4)}`)
-    
+
+    // console.log(`OverseasPayloadPermitPage thePermit: ${JSON.stringify(thePermit, null, 4)}`)
+
+
+
+
+
+    const startSectionIndex = thePermit.data.content.match("Information about applicants")?.index
+    console.log(`OverseasPayloadPermitPage startSectionIndex: ${startSectionIndex}`)
+
+    const endSectionIndex = thePermit.data.content.match("Organisational structure")?.index
+    console.log(`OverseasPayloadPermitPage endSectionIndex: ${endSectionIndex}`)
+
+    const commaPreEndSection = thePermit.data.content.substring(0, endSectionIndex).lastIndexOf(",")
+    console.log(`OverseasPayloadPermitPage commaPreEndSection: ${commaPreEndSection}`)
+
+    const section01 = "{ " + thePermit.data.content.substring(startSectionIndex - 1, commaPreEndSection) + " }"
+    // console.log(`OverseasPayloadPermitPage section01: ${section01}`)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <>
             <Head>
@@ -68,6 +102,20 @@ const OverseasPayloadPermitPage: NextPage = () => {
             </Head>
 
             <h1>{thePermit.data.title}</h1>
+
+
+            <pre>
+                {section01}
+            </pre>
+
+
+            <hr />
+
+
+            <div>
+                asdf
+            </div>
+
 
 
 
@@ -84,5 +132,29 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
 }
+
+
+
+
+function JsonCracked(props: any) {
+
+
+    let compressed = compress(props)
+
+    const encodedStuff = encodeURI(JSON.stringify(compressed))
+
+    const jsonCrackUrl = `https://jsoncrack.com/widget?json=${encodedStuff}`
+
+    return (
+        <iframe
+            src={props}
+            width="100%"
+            height="640"
+            className="border-2"></iframe>
+    )
+}
+
+
+
 
 export default OverseasPayloadPermitPage

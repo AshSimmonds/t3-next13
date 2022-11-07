@@ -105,7 +105,7 @@ async function _fetchFromAirtable(permitId: string | undefined = undefined) {
     //     fetchResult.records[0].fields.MISSING_FIELD = false
     // }
 
-    console.log(`fetchFromAirtable fetchResult: ${JSON.stringify(fetchResult, null, 4)}`)
+    // console.log(`fetchFromAirtable fetchResult: ${JSON.stringify(fetchResult, null, 4)}`)
 
     return fetchResult
 }

@@ -20,6 +20,7 @@
     "@trpc/react-query": "10.0.0-rc.0",
     "@trpc/server": "10.0.0-rc.0",
     "@xstate/react": "^3.0.1",
+    "compress-json": "^2.1.2",
     "daisyui": "^2.38.0",
     "markdown-it": "^13.0.1",
     "next": "^13.0.3-canary.0",
