@@ -13,13 +13,14 @@ import Link from "next/link"
 const OverseasPayloadPermitPage: NextPage = () => {
     const { user, error, isLoading } = useUser()
 
+    const permitId = useRouter().query.id as string
+
     if (error) {
         console.log(`OverseasPayloadPermitPage error: ${error}`)
 
         return <div>{error.message}</div>
     }
 
-    const permitId = useRouter().query.id as string
     const userId = user?.sub
 
     const parameterObject = {
@@ -182,7 +183,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
                 {sectionList.map((theSection) => (
-                    <JsonSection theJson={thePermit.data.content} {...theSection} />
+                    <JsonSection key={thePermit.data.fields.record_id} theJson={thePermit.data.content} {...theSection} />
                 ))}
             </div>
 
@@ -337,7 +338,7 @@ function JsonSection(props: any) {
 
 function JsonCrackedLink(props: any) {
 
-    let compressed = compress(props.jsonPart)
+    const compressed = compress(props.jsonPart)
 
     // console.log(`JsonCrackedLink compressed: ${compressed}`)
 
@@ -359,7 +360,7 @@ function JsonCrackedLink(props: any) {
 function JsonCrackedEmbed(props: any) {
 
 
-    let compressed = compress(props.jsonPart)
+    const compressed = compress(props.jsonPart)
 
     const encodedStuff = encodeURI(JSON.stringify(compressed))
 
