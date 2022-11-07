@@ -193,7 +193,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
             <hr />
-            <h3>Full source <a href="https://jsoncrack.com/editor" target="_blank" >(JSON visualiser)</a></h3>
+            <h3>Full source <a href="https://jsoncrack.com/editor" target="_blank" rel="noreferrer" >(JSON visualiser)</a></h3>
             <textarea className="w-full h-96 bg-slate-800 text-green-500">
                 {thePermit.data.content as string}
             </textarea>
