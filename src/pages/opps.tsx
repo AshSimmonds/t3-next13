@@ -28,9 +28,12 @@ const OverseasPayloadPermitListPage: NextPage = () => {
 
 
     // useQuery({ text: "from tRPC" });
-    const trpcHelloTestUseTrpc = trpc.overseasPayloadPermit.hello.useQuery({ text: "zxcv" })
+    // const trpcHelloTestUseTrpc = trpc.overseasPayloadPermit.hello.useQuery({ text: "zxcv" })
 
-    const h2Heading = trpcHelloTestUseTrpc.data?.greeting
+    // const h2Heading = trpcHelloTestUseTrpc.data?.greeting
+
+    const h1Heading = "Overseas Payload Permits"
+    const h2Heading = ''
 
     console.log(`OverseasPayloadPermitListPage h2Heading: ${JSON.stringify(h2Heading, null, 4)}`)
 
@@ -62,7 +65,7 @@ const OverseasPayloadPermitListPage: NextPage = () => {
                 <title>Overseas Payload Permit</title>
             </Head>
 
-            <h1>{ }</h1>
+            <h1>{h1Heading}</h1>
 
             <h2>{h2Heading}</h2>
 
@@ -85,15 +88,18 @@ function AllPermitsDisplay(allPermitsObject: any) {
 
             <div>
                 {allPermitsObject.records?.map((permit: any) => (
-                    <div key={permit.id}>
+                    <div key={permit.id} className="mt-16">
                         <h3><Link href={`/opp/${permit.id}`}>{permit.fields.title}</Link></h3>
-                        <p>{permit.fields.content}</p>
+                        <pre className="h-24 overflow-hidden hover:overflow-auto hover:h-auto hover:transition-all ease-in-out delay-1000">
+                            {permit.fields.content}
+                        </pre>
                     </div>
                 ))}
             </div>
 
             <hr />
-            <pre>
+            <h2>All applications</h2>
+            <pre className="h-24 overflow-hidden hover:overflow-auto hover:h-auto hover:transition-all ease-in-out delay-1000">
                 {JSON.stringify(allPermitsObject, null, 4)}
             </pre>
         </>
