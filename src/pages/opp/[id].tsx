@@ -38,7 +38,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
                 <div className="w-full items-center justify-center p-0 md:p-4 mx-auto">
 
-                    <div className="w-full flex justify-center items-center h-56 sm:h-[28rem] md:h-[28rem] lg:h-[32rem] xl:h-[44rem] bg-black text-neutral-content"
+                    <div className="w-full flex justify-center items-center h-8 bg-black text-neutral-content"
                     // style={{
                     //     backgroundImage: `url('/AshSimmonds.png')`,
                     //     backgroundSize: "100%",
@@ -183,7 +183,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
                 {sectionList.map((theSection) => (
-                    <JsonSection key={thePermit.data.fields.record_id} theJson={thePermit.data.content} {...theSection} />
+                    <JsonSection key={thePermit.data.record_id} theJson={thePermit.data.content} {...theSection} />
                 ))}
             </div>
 
@@ -255,56 +255,60 @@ function JsonSection(props: any) {
         hover:border-opacity-80
         hover:scale-105
         hover:shadow-2xl
+        hover:w-full
+        hover:flex-grow
         transition-all
         ">
 
-                <h2>{props.startText}</h2>
+            <h2>{props.startText}</h2>
 
-                <progress className="progress progress-info w-56" value={randomProgress} max="100"></progress>
+            <progress className="progress progress-info w-56" value={randomProgress} max="100"></progress>
 
-                <p className="text-sm">
-                    {props.description}
-                </p>
+            <p className="text-sm">
+                {props.description}
+            </p>
 
-                {/* {theSection} */}
+            <pre className="h-24 overflow-hidden hover:overflow-auto hover:h-auto hover:transition-all ease-in-out delay-1000">
+                {theSection}
+            </pre>
 
-                {props.children}
+            {props.children}
 
 
-                <div className={`alert alert-info shadow-lg ${props.alertInfo ? '' : 'hidden'}`}>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span>{props.alertInfo}</span>
-                    </div>
+            <div className={`alert alert-info shadow-lg ${props.alertInfo ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>{props.alertInfo}</span>
                 </div>
+            </div>
 
-                <div className={`alert alert-success shadow-lg ${props.alertSuccess ? '' : 'hidden'}`}>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span>{props.alertSuccess}</span>
-                    </div>
+            <div className={`alert alert-success shadow-lg ${props.alertSuccess ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{props.alertSuccess}</span>
                 </div>
+            </div>
 
-                <div className={`alert alert-warning shadow-lg ${props.alertWarning ? '' : 'hidden'}`}>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                        <span>{props.alertWarning}</span>
-                    </div>
+            <div className={`alert alert-warning shadow-lg ${props.alertWarning ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span>{props.alertWarning}</span>
                 </div>
+            </div>
 
-                <div className={`alert alert-error shadow-lg ${props.alertError ? '' : 'hidden'}`}>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span>{props.alertError}</span>
-                    </div>
+            <div className={`alert alert-error shadow-lg ${props.alertError ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{props.alertError}</span>
                 </div>
+            </div>
 
 
 
 
 
-                {/* The button to open modal */}
-                {/* <label htmlFor="my-modal-5" className="btn">open modal</label> */}
+            {/* The button to open modal */}
+            {/* <label htmlFor="my-modal-5" className="btn">open modal</label> */}
 
 
         </div>
