@@ -67,16 +67,16 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
 
-    const startSectionIndex = thePermit.data.content.match("Information about applicants")?.index
-    console.log(`OverseasPayloadPermitPage startSectionIndex: ${startSectionIndex}`)
+    // const startSectionIndex = thePermit.data.content.match("Information about applicants")?.index
+    // console.log(`OverseasPayloadPermitPage startSectionIndex: ${startSectionIndex}`)
 
-    const endSectionIndex = thePermit.data.content.match("Organisational structure")?.index
-    console.log(`OverseasPayloadPermitPage endSectionIndex: ${endSectionIndex}`)
+    // const endSectionIndex = thePermit.data.content.match("Organisational structure")?.index
+    // console.log(`OverseasPayloadPermitPage endSectionIndex: ${endSectionIndex}`)
 
-    const commaPreEndSection = thePermit.data.content.substring(0, endSectionIndex).lastIndexOf(",")
-    console.log(`OverseasPayloadPermitPage commaPreEndSection: ${commaPreEndSection}`)
+    // const commaPreEndSection = thePermit.data.content.substring(0, endSectionIndex).lastIndexOf(",")
+    // console.log(`OverseasPayloadPermitPage commaPreEndSection: ${commaPreEndSection}`)
 
-    const section01 = "{ " + thePermit.data.content.substring(startSectionIndex - 1, commaPreEndSection) + " }"
+    // const section01 = "{ " + thePermit.data.content.substring(startSectionIndex - 1, commaPreEndSection) + " }"
     // console.log(`OverseasPayloadPermitPage section01: ${section01}`)
 
 
@@ -103,17 +103,24 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <h1>{thePermit.data.title}</h1>
 
+            <div>
+                asdf
+            </div>
+
 
             <pre>
-                {section01}
+                <JsonSection theJson={thePermit.data.content} theStart="Information about applicants" theEnd="Organisational structure" />
             </pre>
 
+            <div>
+                qwer
+            </div>
 
             <hr />
 
 
             <div>
-                asdf
+                zxcv
             </div>
 
 
@@ -121,8 +128,9 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
             <hr />
+            <h3>thePermit.data.content</h3>
             <pre>
-                {thePermit.data.content}
+                {thePermit.data.content as string}
             </pre>
 
 
@@ -136,21 +144,112 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
 
-function JsonCracked(props: any) {
+// function JsonSection(theJson: any, theStart: string, theEnd: string) {
+function JsonSection(props: any) {
+
+    // const theText = " " + JSON.stringify(props.theJson) + " " as string
+
+    console.log(`JsonSection props.theJson: ${props.theJson}`)
+    console.log(`JsonSection theStart: ${props.theStart}`)
+
+    const startSectionIndex = props.theJson.match(props.theStart)?.index
+    console.log(`JsonSection startSectionIndex: ${startSectionIndex}`)
+
+    const endSectionIndex = props.theJson.match(props.theEnd)?.index ?? 0
+    console.log(`JsonSection endSectionIndex: ${endSectionIndex}`)
+
+    const commaPreEndSection = props.theJson.substring(0, endSectionIndex).lastIndexOf(",")
+    console.log(`JsonSection commaPreEndSection: ${commaPreEndSection}`)
+
+    const theSection = "{ " + props.theJson.substring(startSectionIndex - 1, commaPreEndSection) + " }"
+    // console.log(`JsonSection theSection: ${theSection}`)
+
+    return <>{theSection}</>
+
+}
 
 
-    let compressed = compress(props)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function JsonCrackedLink(props: any) {
+
+    let compressed = compress(props.jsonPart)
+
+    // console.log(`JsonCrackedLink compressed: ${compressed}`)
 
     const encodedStuff = encodeURI(JSON.stringify(compressed))
 
-    const jsonCrackUrl = `https://jsoncrack.com/widget?json=${encodedStuff}`
+    console.log(`JsonCrackedLink encodedStuff: ${encodedStuff}`)
+
+    const jsonCrackLinkUrl = 'https://jsoncrack.com/editor?json=' + encodedStuff
+
 
     return (
-        <iframe
-            src={props}
-            width="100%"
-            height="640"
-            className="border-2"></iframe>
+        <a href={jsonCrackLinkUrl} target="_blank" rel="noreferrer">asdf</a>
+    )
+
+}
+
+
+
+function JsonCrackedEmbed(props: any) {
+
+
+    let compressed = compress(props.jsonPart)
+
+    const encodedStuff = encodeURI(JSON.stringify(compressed))
+
+    // https://jsoncrack.com/widget?t=1
+    const jsonCrackEmbedUrl = `https://jsoncrack.com/widget?t=1`//&json=${encodedStuff}`
+
+
+    // const embedScript = '<script>function sendToEmbed() { console.log("asdf"); const jsonCrackEmbed = document.getElementById("jsoncrackEmbed"); const json = document.getElementById("jsoncrackInput").value; jsonCrackEmbed.contentWindow.postMessage({ json: json }, "*");}</script>'
+
+    const embedScript = '<script> var jsonCrackEmbed = document.getElementById("jsoncrackEmbed"); jsonCrackEmbed.contentWindow.postMessage({ json: json }, "*"); </script>'
+
+
+    return (
+        <section>
+            <div>
+
+
+
+                {/* {embedScript} */}
+
+
+
+                <textarea id="jsoncrackInput">
+                    {props.jsonPart}
+                </textarea>
+                {/* <button onclick="sendToEmbed()">Send JSON to Embed</button> */}
+            </div>
+
+            <iframe id="jsoncrackEmbed"
+                src={jsonCrackEmbedUrl} width="100%" height="100%" className="border-2">
+            </iframe>
+
+            {embedScript}
+        </section>
+
+
     )
 }
 
