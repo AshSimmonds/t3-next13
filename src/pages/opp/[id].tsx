@@ -198,6 +198,10 @@ const OverseasPayloadPermitPage: NextPage = () => {
             </pre>
 
 
+
+
+
+
         </>
     )
 
@@ -228,6 +232,9 @@ function JsonSection(props: any) {
     const theSection = "{ " + props.theJson.substring(startSectionIndex - 1, commaPreEndSection) + " }"
     // console.log(`JsonSection theSection: ${theSection}`)
 
+    const randomProgress = Math.floor(Math.random() * 100) + 1
+
+
     return (
         <div
             className="flex 
@@ -237,58 +244,73 @@ function JsonSection(props: any) {
         md:w-64 
         cursor-pointer 
         bg-base-200
-        rounded-lg
+        rounded-sm
         shadow-md
-        border:default
+        border-2
+        border-primary
+        border-opacity-20
         hover:bg-base-300 
         hover:bg-opacity-50
-        hover:border-secondary
+        hover:border-opacity-80
         hover:scale-105
         hover:shadow-2xl
         transition-all
         ">
 
-            <h2>{props.startText}</h2>
+                <h2>{props.startText}</h2>
 
-            <p className="text-sm">
-                {props.description}
-            </p>
+                <progress className="progress progress-info w-56" value={randomProgress} max="100"></progress>
 
-            {/* {theSection} */}
+                <p className="text-sm">
+                    {props.description}
+                </p>
 
-            {props.children}
+                {/* {theSection} */}
+
+                {props.children}
 
 
-            <div className={`alert alert-info shadow-lg ${props.alertInfo ? '' : 'hidden'}`}>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>{props.alertInfo}</span>
+                <div className={`alert alert-info shadow-lg ${props.alertInfo ? '' : 'hidden'}`}>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>{props.alertInfo}</span>
+                    </div>
                 </div>
-            </div>
 
-            <div className={`alert alert-success shadow-lg ${props.alertSuccess ? '' : 'hidden'}`}>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>{props.alertSuccess}</span>
+                <div className={`alert alert-success shadow-lg ${props.alertSuccess ? '' : 'hidden'}`}>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>{props.alertSuccess}</span>
+                    </div>
                 </div>
-            </div>
 
-            <div className={`alert alert-warning shadow-lg ${props.alertWarning ? '' : 'hidden'}`}>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span>{props.alertWarning}</span>
+                <div className={`alert alert-warning shadow-lg ${props.alertWarning ? '' : 'hidden'}`}>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <span>{props.alertWarning}</span>
+                    </div>
                 </div>
-            </div>
 
-            <div className={`alert alert-error shadow-lg ${props.alertError ? '' : 'hidden'}`}>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>{props.alertError}</span>
+                <div className={`alert alert-error shadow-lg ${props.alertError ? '' : 'hidden'}`}>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>{props.alertError}</span>
+                    </div>
                 </div>
-            </div>
+
+
+
+
+
+                {/* The button to open modal */}
+                {/* <label htmlFor="my-modal-5" className="btn">open modal</label> */}
 
 
         </div>
+
+
+
+
     )
 }
 
