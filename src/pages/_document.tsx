@@ -29,6 +29,8 @@ class TheDocument extends Document {
                     <link rel="preconnect" href="https://api.fonts.coollabs.io" />
                     <link href="https://api.fonts.coollabs.io/css2?family=Montserrat&family=Rajdhani:wght@600&display=swap" rel="stylesheet"></link>
 
+                    {/* <link rel="script" href="/copystuff.js" ></link> */}
+
                 </Head>
 
                 <body>

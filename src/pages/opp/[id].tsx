@@ -193,10 +193,10 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
             <hr />
-            <h3>Full source <span className="badge">(thePermit.data.content)</span></h3>
-            <pre>
+            <h3>Full source <a href="https://jsoncrack.com/editor" target="_blank" >(JSON visualiser)</a></h3>
+            <textarea className="w-full h-96 bg-slate-800 text-green-500">
                 {thePermit.data.content as string}
-            </pre>
+            </textarea>
 
 
 
@@ -309,6 +309,15 @@ function JsonSection(props: any) {
 
             {/* The button to open modal */}
             {/* <label htmlFor="my-modal-5" className="btn">open modal</label> */}
+
+
+
+
+
+
+
+
+
 
 
         </div>

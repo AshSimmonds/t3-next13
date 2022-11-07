@@ -90,7 +90,7 @@ function AllPermitsDisplay(allPermitsObject: any) {
                 {allPermitsObject.records?.map((permit: any) => (
                     <div key={permit.id} className="mt-16">
                         <h3><Link href={`/opp/${permit.id}`}>{permit.fields.title}</Link></h3>
-                        <pre className="h-24 overflow-hidden hover:overflow-auto hover:h-auto hover:transition-all ease-in-out delay-1000">
+                        <pre className="h-24 overflow-hidden hover:overflow-auto hover:h-auto hover:transition-all ease-in-out delay-500">
                             {permit.fields.content}
                         </pre>
                     </div>
