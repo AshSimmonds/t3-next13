@@ -3,8 +3,7 @@ import { NextPage } from "next"
 // import NextError from "next/error"
 import Head from "next/head"
 import { useRouter } from "next/router"
-
-
+import { trpc } from "../../utils/trpc"
 
 
 
@@ -15,19 +14,68 @@ const OverseasPayloadPermitPage: NextPage = () => {
         console.log(`OverseasPayloadPermitPage error: ${error}`)
 
         return <div>{error.message}</div>
-    }   
+    }
 
     const permitId = useRouter().query.id as string
     const userId = user?.sub
 
+    const parameterObject = {
+        "permitId": permitId,
+    }
+
+    const thePermit = trpc.overseasPayloadPermit.getOne.useQuery(parameterObject)
+
+    if (thePermit.status !== 'success') {
+        return (
+            <>
+                <Head>
+                    <title>{permitId ? permitId : 'Loading...'}</title>
+                </Head>
+
+                <div className="w-full items-center justify-center p-0 md:p-4 mx-auto">
+
+                    <div className="w-full flex justify-center items-center h-56 sm:h-[28rem] md:h-[28rem] lg:h-[32rem] xl:h-[44rem] bg-black text-neutral-content"
+                        style={{
+                            backgroundImage: `url('/AshSimmonds.png')`,
+                            backgroundSize: "100%",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
+                        }}
+                    >
+                        <div className="animate-spin inline-block w-16 h-16 border-0 rounded-full" role="status">
+                            <span className="visually-hidden"><img src="/cricket-ball.svg" alt='' /></span>
+                        </div>
+
+                    </div>
 
 
+                    <h1>
+                        Loading: {permitId}
+                    </h1>
+                </div>
 
+            </>
+        )
+    }
+
+
+    console.log(`OverseasPayloadPermitPage thePermit: ${JSON.stringify(thePermit, null, 4)}`)
+    
     return (
         <>
             <Head>
-                <title>asdf</title>
+                <title>{thePermit.data.title} | {thePermit.data.record_id} | Overseas Payload Permit | Blue Dwarf Space</title>
             </Head>
+
+            <h1>{thePermit.data.title}</h1>
+
+
+
+
+            <hr />
+            <pre>
+                {thePermit.data.content}
+            </pre>
 
 
         </>

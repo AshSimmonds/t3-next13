@@ -26,8 +26,33 @@ export const overseasPayloadPermitRouter = router({
         return _fetchFromAirtable()
     }),
 
+    
+
+    getOne: protectedProcedure
+        .input(z.object({
+            permitId: z.string()
+        }))
+        .query(({ ctx, input }) => {
+
+            // console.log(`getOne input: ${input}`)
+
+            const permitObject = _fetchFromAirtable(input.permitId)
+                .then((permitObject: any) => {
+
+                    // console.log(`getOne permitObject: ${JSON.stringify(permitObject, null, 4)}`)
+
+                    return permitObject.records[0].fields
+                })
+                .catch((error: any) => {
+                    console.log(`getOne error: ${error}`)
+                })
+
+            return permitObject
+        }),
 
 })
+
+
 
 
 
@@ -57,7 +82,11 @@ async function _fetchFromAirtable(permitId: string | undefined = undefined) {
     }).then(airtableResult => airtableResult.json())
         .then(async airtableJson => {
             if (airtableJson.records.length > 0) {
+
+                // console.log(`_fetchFromAirtable airtableJson: ${JSON.stringify(airtableJson, null, 4)}`)
+
                 return airtableJson
+
             } else {
                 // TODO: dunno
             }
@@ -76,7 +105,7 @@ async function _fetchFromAirtable(permitId: string | undefined = undefined) {
     //     fetchResult.records[0].fields.MISSING_FIELD = false
     // }
 
-    // console.log(`fetchFromAirtable fetchResult: ${JSON.stringify(fetchResult, null, 4)}`)
+    console.log(`fetchFromAirtable fetchResult: ${JSON.stringify(fetchResult, null, 4)}`)
 
     return fetchResult
 }
