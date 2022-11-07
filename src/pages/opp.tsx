@@ -31,7 +31,29 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
     const h2Heading = trpcHelloTestUseTrpc.data?.greeting
 
-    console.log (`OverseasPayloadPermitPage h2Heading: ${JSON.stringify(h2Heading, null, 4)}`)
+    console.log(`OverseasPayloadPermitPage h2Heading: ${JSON.stringify(h2Heading, null, 4)}`)
+
+
+    const allPermitsObject = trpc.overseasPayloadPermit.getAll.useQuery()
+
+
+    let finalOutput = null
+
+
+    if (allPermitsObject.error) {
+        finalOutput = (
+            <>
+                <h2>
+                    {allPermitsObject.error.data?.httpStatus} | {allPermitsObject.error.message}
+                </h2>
+                <pre>
+                    {JSON.stringify(allPermitsObject.error, null, 4)}
+                </pre>
+            </>
+        )
+    }
+
+    // <AllPermitsDisplay allPermitsObject={allPermitsObject} />
 
 
     return (
@@ -40,16 +62,48 @@ const OverseasPayloadPermitPage: NextPage = () => {
                 <title>Overseas Payload Permit</title>
             </Head>
 
-            <h1>{}</h1>
+            <h1>{ }</h1>
 
             <h2>{h2Heading}</h2>
 
-            <div>
-                nowhere
-            </div>
+            {finalOutput}
+
         </>
     )
 
 }
+
+
+
+
+function AllPermitsDisplay(allPermitsObject: any) {
+    // const allPermitsObject = trpc.overseasPayloadPermit.getAll.useQuery()
+
+    console.log(`allPermitsObject.error: ${JSON.stringify(allPermitsObject.error, null, 4)}`)
+
+    if (allPermitsObject.error) {
+        return <div>Loading...</div>
+    }
+
+    return (
+        <>
+            {JSON.stringify(allPermitsObject, null, 4)}
+            {/* <div>
+                {allPermitsObject.data?.map((permit: any) => (
+                    <div key={permit.id}>
+                        <h3>{permit.id}</h3>
+                        <p>{permit.name}</p>
+                    </div>
+                ))}
+            </div>
+            <pre>
+                {JSON.stringify(allPermitsObject, null, 4)}
+            </pre> */}
+        </>
+    )
+}
+
+
+
 
 export default OverseasPayloadPermitPage
