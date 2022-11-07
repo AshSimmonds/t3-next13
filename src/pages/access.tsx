@@ -106,16 +106,17 @@ const AccessPage: NextPage = () => {
             actions: {
                 toggleFavourite: (context, event) => {
                     console.log(`toggleFavourite: ${context.isFavourite}`)
+                },
+                delayASecond: (context, event) => {
+                    console.log(`delayASecond BEFORE: ${context.isFavourite}`)
+
+                    context.isFavourite = !context.isFavourite
+
                     example.toggleFavourite.fetch().then((isNowFavourite) => {
                         context.isFavourite = isNowFavourite
                     })
-                    // context.isFavourite = !context.isFavourite
-                },
-                delayASecond: (context, event) => {
-                    console.log(`delayASecond: ${JSON.stringify(event, null, 4)}`)
-                    setTimeout(() => {
-                        console.log(`delayASecond: ${context.isFavourite}`)
-                    }, 1000)
+
+                    console.log(`delayASecond AFTER: ${context.isFavourite}`)
                 }
             },
 
@@ -127,19 +128,21 @@ const AccessPage: NextPage = () => {
         const [current, send] = useMachine(favouriteMachine)
 
         return (
-            <>
-                <div>
-                    <div className="checkbox-wrapper-55">
-                        <label className="rocker rocker-small" >
-                            <input type="checkbox"
-                                onChange={() => { send('TOGGLE') }} checked={current.context.isFavourite}
-                            />
-                            <span className="switch-left">Yes</span>
-                            <span className="switch-right">No</span>
-                        </label>
-                    </div>
+            <div>
+                <div className="checkbox-wrapper-55">
+                    <label className="rocker rocker-small" >
+                        <input type="checkbox"
+                            onChange={() => { send('TOGGLE') }} checked={current.context.isFavourite}
+                            disabled={current.value !== 'idle'}
+                        />
+                        <span className="switch-left">Yes</span>
+                        <span className="switch-right">No</span>
+                    </label>
                 </div>
-            </>
+                <div>
+                    State: {current.value}
+                </div>
+            </div>
         );
     }
 
