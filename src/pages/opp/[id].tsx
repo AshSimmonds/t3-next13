@@ -5,6 +5,8 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { trpc } from "../../utils/trpc"
 import { compress, decompress } from "compress-json"
+import { Fragment } from "react"
+import Link from "next/link"
 
 
 
@@ -137,11 +139,11 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <h1>{thePermit.data.title}</h1>
 
-
-            <pre>
-                <JsonSection theJson={thePermit.data.content} theStart="Information about applicants" theEnd="Organisational structure" />
-            </pre>
-
+            <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
+                {sectionList.map((theSection) => (
+                    <JsonSection theJson={thePermit.data.content} theStart={theSection.startText} theEnd={theSection.endText} />
+                ))}
+            </div>
 
             <hr />
 
@@ -184,7 +186,12 @@ function JsonSection(props: any) {
     const theSection = "{ " + props.theJson.substring(startSectionIndex - 1, commaPreEndSection) + " }"
     // console.log(`JsonSection theSection: ${theSection}`)
 
-    return <>{theSection}</>
+    return (
+        <>
+            <h2>{props.theStart}</h2>
+            {/* {theSection} */}
+        </>
+    )
 
 }
 
