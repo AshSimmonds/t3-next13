@@ -82,7 +82,7 @@ const AccessPage: NextPage = () => {
         createMachine(
             {
                 context: { isFavourite: initialIsFavourite ? true : false },
-                tsTypes: {} as import("./access.typegen").Typegen0,
+                // tsTypes: {} as import("./access.typegen").Typegen0,
                 predictableActionArguments: true,
                 id: "favourite",
                 initial: "idle",
