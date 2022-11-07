@@ -38,12 +38,12 @@ const OverseasPayloadPermitPage: NextPage = () => {
                 <div className="w-full items-center justify-center p-0 md:p-4 mx-auto">
 
                     <div className="w-full flex justify-center items-center h-56 sm:h-[28rem] md:h-[28rem] lg:h-[32rem] xl:h-[44rem] bg-black text-neutral-content"
-                        style={{
-                            backgroundImage: `url('/AshSimmonds.png')`,
-                            backgroundSize: "100%",
-                            backgroundRepeat: "no-repeat",
-                            backgroundPosition: "center",
-                        }}
+                    // style={{
+                    //     backgroundImage: `url('/AshSimmonds.png')`,
+                    //     backgroundSize: "100%",
+                    //     backgroundRepeat: "no-repeat",
+                    //     backgroundPosition: "center",
+                    // }}
                     >
                         <div className="animate-spin inline-block w-16 h-16 border-0 rounded-full" role="status">
                             <span className="visually-hidden"><img src="/cricket-ball.svg" alt='' /></span>
@@ -88,35 +88,43 @@ const OverseasPayloadPermitPage: NextPage = () => {
     const sectionList = [
         {
             "startText": "Information about applicants",
-            "endText": "Organisational structure"
+            "endText": "Organisational structure",
+            "description": "Bacon ipsum dolor amet doner tail chuck fatback tenderloin sirloin filet mignon ham flank beef. Shank doner sirloin pork chop",
         },
         {
             "startText": "Organisational structure",
-            "endText": "Launch and payload"
+            "endText": "Launch and payload",
+            "description": "andouille brisket strip steak spare ribs boudin",
         },
         {
             "startText": "Launch and payload",
-            "endText": "Launch safety"
+            "endText": "Launch safety",
+            "description": "capicola alcatra tail boudin pig. Pig capicola buffalo tenderloin swine jowl",
         },
         {
             "startText": "Launch safety",
-            "endText": "Debris mitigation"
+            "endText": "Debris mitigation",
+            "description": "sausage pastrami burgdoggen filet mignon. Burgdoggen pork chop spare ribs leberkas kielbasa. Pork chop hamburger",
         },
         {
             "startText": "Debris mitigation",
-            "endText": "Contracts"
+            "endText": "Contracts",
+            "description": "corned beef turkey short loin. Prosciutto",
         },
         {
             "startText": "Contracts",
-            "endText": "Additional information"
+            "endText": "Additional information",
+            "description": "sirloin ground round turkey short loin. Beef",
         },
         {
             "startText": "Additional information",
-            "endText": "Applicant declaration"
+            "endText": "Applicant declaration",
+            "description": "ribs chislic strip steak. Pork short ribs",
         },
         {
             "startText": "Applicant declaration",
-            "endText": "zxcv"
+            "endText": "zxcv",
+            "description": "picanha short loin biltong. ",
         },
     ]
 
@@ -141,7 +149,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
                 {sectionList.map((theSection) => (
-                    <JsonSection theJson={thePermit.data.content} theStart={theSection.startText} theEnd={theSection.endText} />
+                    <JsonSection theJson={thePermit.data.content} theStart={theSection.startText} theEnd={theSection.endText} theDescription={theSection.description} />
                 ))}
             </div>
 
@@ -150,7 +158,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
             <hr />
-            <h3>thePermit.data.content</h3>
+            <h3>Full source <span className="badge">(thePermit.data.content)</span></h3>
             <pre>
                 {thePermit.data.content as string}
             </pre>
@@ -189,21 +197,28 @@ function JsonSection(props: any) {
     return (
         <div
             className="flex 
-            flex-col 
-            p-4 
-            w-full
-            md:w-64 
-            bg-base-200
-            rounded-lg
-            shadow-lg
-            border border-base-100
-            hover:scale-105
-            hover:shadow-xl
-            transition-all
-
-            ">
+        flex-col 
+        p-2 
+        w-full
+        md:w-64 
+        cursor-pointer 
+        bg-base-200
+        rounded-lg
+        shadow-md
+        border:default
+        hover:bg-base-300 
+        hover:bg-opacity-50
+        hover:border-secondary
+        hover:scale-105
+        hover:shadow-2xl
+        transition-all
+        ">
 
             <h2>{props.theStart}</h2>
+
+            <p className="text-sm">
+                {props.theDescription}
+            </p>
 
             {/* {theSection} */}
 
