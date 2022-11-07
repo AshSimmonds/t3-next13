@@ -90,41 +90,73 @@ const OverseasPayloadPermitPage: NextPage = () => {
             "startText": "Information about applicants",
             "endText": "Organisational structure",
             "description": "Bacon ipsum dolor amet doner tail chuck fatback tenderloin sirloin filet mignon ham flank beef. Shank doner sirloin pork chop",
+            "alertInfo": "Mostly good, waiting on approval",
+            "alertSuccess": "",
+            "alertWarning": "",
+            "alertError": "",
         },
         {
             "startText": "Organisational structure",
             "endText": "Launch and payload",
             "description": "andouille brisket strip steak spare ribs boudin",
+            "alertInfo": "",
+            "alertSuccess": "",
+            "alertWarning": "",
+            "alertError": "",
         },
         {
             "startText": "Launch and payload",
             "endText": "Launch safety",
             "description": "capicola alcatra tail boudin pig. Pig capicola buffalo tenderloin swine jowl",
+            "alertInfo": "",
+            "alertSuccess": "",
+            "alertWarning": "May require relocation",
+            "alertError": "",
         },
         {
             "startText": "Launch safety",
             "endText": "Debris mitigation",
             "description": "sausage pastrami burgdoggen filet mignon. Burgdoggen pork chop spare ribs leberkas kielbasa. Pork chop hamburger",
+            "alertInfo": "",
+            "alertSuccess": "",
+            "alertWarning": "",
+            "alertError": "",
         },
         {
             "startText": "Debris mitigation",
             "endText": "Contracts",
             "description": "corned beef turkey short loin. Prosciutto",
+            "alertInfo": "",
+            "alertSuccess": "",
+            "alertWarning": "",
+            "alertError": "",
         },
         {
             "startText": "Contracts",
             "endText": "Additional information",
             "description": "sirloin ground round turkey short loin. Beef",
+            "alertInfo": "",
+            "alertSuccess": "Completed",
+            "alertWarning": "",
+            "alertError": "",
         },
         {
             "startText": "Additional information",
             "endText": "Applicant declaration",
             "description": "ribs chislic strip steak. Pork short ribs",
+            "alertInfo": "",
+            "alertSuccess": "",
+            "alertWarning": "",
+            "alertError": "",
         },
         {
             "startText": "Applicant declaration",
             "endText": "zxcv",
             "description": "picanha short loin biltong. ",
+            "alertInfo": "",
+            "alertSuccess": "",
+            "alertWarning": "",
+            "alertError": "Might have nukes",
         },
     ]
 
@@ -145,11 +177,12 @@ const OverseasPayloadPermitPage: NextPage = () => {
                 <title>{thePermit.data.title} | {thePermit.data.record_id} | Overseas Payload Permit | Blue Dwarf Space</title>
             </Head>
 
+            <h3 className="text-secondary" >Overseas Payload Permit Application</h3>
             <h1>{thePermit.data.title}</h1>
 
             <div className="w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-12 mb-8">
                 {sectionList.map((theSection) => (
-                    <JsonSection theJson={thePermit.data.content} theStart={theSection.startText} theEnd={theSection.endText} theDescription={theSection.description} />
+                    <JsonSection theJson={thePermit.data.content} {...theSection} />
                 ))}
             </div>
 
@@ -182,10 +215,10 @@ function JsonSection(props: any) {
     // console.log(`JsonSection props.theJson: ${props.theJson}`)
     // console.log(`JsonSection theStart: ${props.theStart}`)
 
-    const startSectionIndex = props.theJson.match(props.theStart)?.index
+    const startSectionIndex = props.theJson.match(props.startText)?.index
     console.log(`JsonSection startSectionIndex: ${startSectionIndex}`)
 
-    const endSectionIndex = props.theJson.match(props.theEnd)?.index ?? 0
+    const endSectionIndex = props.theJson.match(props.endText)?.index ?? 0
     console.log(`JsonSection endSectionIndex: ${endSectionIndex}`)
 
     const commaPreEndSection = props.theJson.substring(0, endSectionIndex).lastIndexOf(",")
@@ -214,19 +247,48 @@ function JsonSection(props: any) {
         transition-all
         ">
 
-            <h2>{props.theStart}</h2>
+            <h2>{props.startText}</h2>
 
             <p className="text-sm">
-                {props.theDescription}
+                {props.description}
             </p>
 
             {/* {theSection} */}
 
             {props.children}
 
+
+            <div className={`alert alert-info shadow-lg ${props.alertInfo ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current flex-shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>{props.alertInfo}</span>
+                </div>
+            </div>
+
+            <div className={`alert alert-success shadow-lg ${props.alertSuccess ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{props.alertSuccess}</span>
+                </div>
+            </div>
+
+            <div className={`alert alert-warning shadow-lg ${props.alertWarning ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span>{props.alertWarning}</span>
+                </div>
+            </div>
+
+            <div className={`alert alert-error shadow-lg ${props.alertError ? '' : 'hidden'}`}>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{props.alertError}</span>
+                </div>
+            </div>
+
+
         </div>
     )
-
 }
 
 
@@ -282,9 +344,9 @@ function JsonCrackedEmbed(props: any) {
     const jsonCrackEmbedUrl = `https://jsoncrack.com/widget?t=1`//&json=${encodedStuff}`
 
 
-    // const embedScript = '<script>function sendToEmbed() { console.log("asdf"); const jsonCrackEmbed = document.getElementById("jsoncrackEmbed"); const json = document.getElementById("jsoncrackInput").value; jsonCrackEmbed.contentWindow.postMessage({ json: json }, "*");}</script>'
+    // const embedScript = '<script>function sendToEmbed() {console.log("asdf"); const jsonCrackEmbed = document.getElementById("jsoncrackEmbed"); const json = document.getElementById("jsoncrackInput").value; jsonCrackEmbed.contentWindow.postMessage({json: json }, "*");}</script>'
 
-    const embedScript = '<script> var jsonCrackEmbed = document.getElementById("jsoncrackEmbed"); jsonCrackEmbed.contentWindow.postMessage({ json: json }, "*"); </script>'
+    const embedScript = '<script> var jsonCrackEmbed = document.getElementById("jsoncrackEmbed"); jsonCrackEmbed.contentWindow.postMessage({json: json }, "*"); </script>'
 
 
     return (
