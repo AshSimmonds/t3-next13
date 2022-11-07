@@ -4,7 +4,7 @@ import { router, publicProcedure, protectedProcedure, premiumProcedure, powerPro
 
 const airtableBaseId = process.env.NEXT_PRIVATE_AIRTABLE_BASE_ID
 const airtableApiKey = process.env.NEXT_PRIVATE_AIRTABLE_API_KEY
-const overseasPayloadPermitTable = "overseas-payload-permit"
+const overseasPayloadPermitTable = "overseas_payload_permit"
 const airtableBaseUrl = "https://api.airtable.com/v0/" + airtableBaseId + "/"
 
 const defaultFetchUrl = airtableBaseUrl + overseasPayloadPermitTable
@@ -42,6 +42,8 @@ async function _fetchFromAirtable() {
     // const filterFormula = encodeURI(`?filterByFormula={user_id}="${userId ? userId : 'asdf'}"`)
 
     const fetchUrl = defaultFetchUrl + filterFormula
+
+    // console.log(`_fetchFromAirtable fetchUrl ${fetchUrl}`)
 
     const fetchResult = await fetch(fetchUrl, {
         method: "GET",

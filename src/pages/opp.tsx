@@ -37,11 +37,11 @@ const OverseasPayloadPermitPage: NextPage = () => {
     const allPermitsObject = trpc.overseasPayloadPermit.getAll.useQuery()
 
 
-    let finalOutput = null
+    // console.log(`OverseasPayloadPermitPage allPermitsObject.data: ${JSON.stringify(allPermitsObject.data, null, 4)}`)
 
 
     if (allPermitsObject.error) {
-        finalOutput = (
+        return (
             <>
                 <h2>
                     {allPermitsObject.error.data?.httpStatus} | {allPermitsObject.error.message}
@@ -53,7 +53,6 @@ const OverseasPayloadPermitPage: NextPage = () => {
         )
     }
 
-    // <AllPermitsDisplay allPermitsObject={allPermitsObject} />
 
 
     return (
@@ -66,7 +65,7 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <h2>{h2Heading}</h2>
 
-            {finalOutput}
+            {allPermitsObject?.data ? <AllPermitsDisplay {...allPermitsObject.data} /> : <p>Loading...</p>}
 
         </>
     )
@@ -77,28 +76,25 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
 function AllPermitsDisplay(allPermitsObject: any) {
-    // const allPermitsObject = trpc.overseasPayloadPermit.getAll.useQuery()
 
-    console.log(`allPermitsObject.error: ${JSON.stringify(allPermitsObject.error, null, 4)}`)
-
-    if (allPermitsObject.error) {
-        return <div>Loading...</div>
-    }
+    // allPermitsObject?.records ? console.log(`AllPermitsDisplay allPermitsObject?.records: ${JSON.stringify(allPermitsObject?.records, null, 4)}`) : ''
 
     return (
         <>
-            {JSON.stringify(allPermitsObject, null, 4)}
-            {/* <div>
-                {allPermitsObject.data?.map((permit: any) => (
+
+            <div>
+                {allPermitsObject.records?.map((permit: any) => (
                     <div key={permit.id}>
-                        <h3>{permit.id}</h3>
-                        <p>{permit.name}</p>
+                        <h3>{permit.fields.title}</h3>
+                        <p>{permit.fields.content}</p>
                     </div>
                 ))}
             </div>
+
+            <hr />
             <pre>
                 {JSON.stringify(allPermitsObject, null, 4)}
-            </pre> */}
+            </pre>
         </>
     )
 }
