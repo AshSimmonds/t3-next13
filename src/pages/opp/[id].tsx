@@ -187,10 +187,29 @@ function JsonSection(props: any) {
     // console.log(`JsonSection theSection: ${theSection}`)
 
     return (
-        <>
+        <div
+            className="flex 
+            flex-col 
+            p-4 
+            w-full
+            md:w-64 
+            bg-base-200
+            rounded-lg
+            shadow-lg
+            border border-base-100
+            hover:scale-105
+            hover:shadow-xl
+            transition-all
+
+            ">
+
             <h2>{props.theStart}</h2>
+
             {/* {theSection} */}
-        </>
+
+            {props.children}
+
+        </div>
     )
 
 }
