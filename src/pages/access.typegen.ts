@@ -3,23 +3,32 @@
 export interface Typegen0 {
   "@@xstate/typegen": true;
   internalEvents: {
-    "": { type: "" };
+    "done.invoke.toggleTheFavourite": {
+      type: "done.invoke.toggleTheFavourite";
+      data: unknown;
+      __tip: "See the XState TS docs to learn how to strongly type this.";
+    };
+    "error.platform.toggleTheFavourite": {
+      type: "error.platform.toggleTheFavourite";
+      data: unknown;
+    };
     "xstate.init": { type: "xstate.init" };
   };
-  invokeSrcNameMap: {};
+  invokeSrcNameMap: {
+    toggleFavourite: "done.invoke.toggleTheFavourite";
+  };
   missingImplementations: {
     actions: never;
     services: never;
     guards: never;
     delays: never;
   };
-  eventsCausingActions: {
-    delayASecond: "";
+  eventsCausingActions: {};
+  eventsCausingServices: {
     toggleFavourite: "TOGGLE";
   };
-  eventsCausingServices: {};
   eventsCausingGuards: {};
   eventsCausingDelays: {};
-  matchesStates: "idle" | "loading";
+  matchesStates: "idle" | "toggling";
   tags: never;
 }

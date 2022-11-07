@@ -3,7 +3,7 @@ import { useUser } from '@auth0/nextjs-auth0'
 import { trpc } from "../utils/trpc"
 import { type NextPage } from "next"
 import { useState } from "react"
-import { createMachine, interpret } from 'xstate'
+import { assign, createMachine, interpret } from 'xstate'
 import { useMachine } from '@xstate/react'
 
 const successOutcome = <span className="text-success">yep</span>
@@ -90,34 +90,39 @@ const AccessPage: NextPage = () => {
                     idle: {
                         on: {
                             TOGGLE: {
-                                target: "loading",
-                                actions: "toggleFavourite",
+                                target: "toggling",
                             },
                         },
                     },
-                    loading: {
-                        always: {
-                            target: "idle",
-                            actions: "delayASecond",
+                    toggling: {
+                        invoke: {
+                            id: "toggleTheFavourite",
+                            src: "toggleFavourite",
+                            onDone: {
+                                target: "idle",
+                                // actions: assign({ isFavourite: (context, event) => event.data })
+                            },
+                            onError: {
+                                target: "idle",
+                            },
                         },
                     },
                 },
             }, {
-            actions: {
+            services: {
                 toggleFavourite: (context, event) => {
-                    console.log(`toggleFavourite: ${context.isFavourite}`)
-                },
-                delayASecond: (context, event) => {
-                    console.log(`delayASecond BEFORE: ${context.isFavourite}`)
+                    console.log(`toggleFavourite BEFORE: ${context.isFavourite}`)
 
-                    context.isFavourite = !context.isFavourite
+                    // context.isFavourite = !context.isFavourite
 
-                    example.toggleFavourite.fetch().then((isNowFavourite) => {
+                    const newFavourite = example.toggleFavourite.fetch().then((isNowFavourite) => {
                         context.isFavourite = isNowFavourite
                     })
 
-                    console.log(`delayASecond AFTER: ${context.isFavourite}`)
-                }
+                    console.log(`toggleFavourite AFTER: ${context.isFavourite}`)
+
+                    return newFavourite
+                },
             },
 
         })
@@ -140,7 +145,10 @@ const AccessPage: NextPage = () => {
                     </label>
                 </div>
                 <div>
-                    State: {current.value}
+                    {`current.context: ${JSON.stringify(current.context, null, 4)}`}
+                </div>
+                <div>
+                    {`State: ${current.value}`}
                 </div>
             </div>
         );

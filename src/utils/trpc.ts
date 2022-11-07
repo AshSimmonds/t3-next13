@@ -25,6 +25,16 @@ export const trpc = createTRPCNext<AppRouter>({
                     url: `${getBaseUrl()}/api/trpc`,
                 }),
             ],
+            queryClientConfig: {
+                defaultOptions: {
+                    queries: {
+                        staleTime: 1000 * 60 * 5, // 5 minutes
+                        refetchInterval: 1000 * 60 * 5, // 5 minutes
+                        refetchOnWindowFocus: true,
+                        retry: false,
+                    },
+                },
+            },
         };
     },
     // TODO: figure out why TRPC should or should not use SSR, it is FALSE by default
