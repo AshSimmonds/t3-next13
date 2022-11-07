@@ -83,6 +83,40 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
 
 
+    const sectionList = [
+        {
+            "startText": "Information about applicants",
+            "endText": "Organisational structure"
+        },
+        {
+            "startText": "Organisational structure",
+            "endText": "Launch and payload"
+        },
+        {
+            "startText": "Launch and payload",
+            "endText": "Launch safety"
+        },
+        {
+            "startText": "Launch safety",
+            "endText": "Debris mitigation"
+        },
+        {
+            "startText": "Debris mitigation",
+            "endText": "Contracts"
+        },
+        {
+            "startText": "Contracts",
+            "endText": "Additional information"
+        },
+        {
+            "startText": "Additional information",
+            "endText": "Applicant declaration"
+        },
+        {
+            "startText": "Applicant declaration",
+            "endText": "zxcv"
+        },
+    ]
 
 
 
@@ -103,27 +137,13 @@ const OverseasPayloadPermitPage: NextPage = () => {
 
             <h1>{thePermit.data.title}</h1>
 
-            <div>
-                asdf
-            </div>
-
 
             <pre>
                 <JsonSection theJson={thePermit.data.content} theStart="Information about applicants" theEnd="Organisational structure" />
             </pre>
 
-            <div>
-                qwer
-            </div>
 
             <hr />
-
-
-            <div>
-                zxcv
-            </div>
-
-
 
 
 
@@ -149,8 +169,8 @@ function JsonSection(props: any) {
 
     // const theText = " " + JSON.stringify(props.theJson) + " " as string
 
-    console.log(`JsonSection props.theJson: ${props.theJson}`)
-    console.log(`JsonSection theStart: ${props.theStart}`)
+    // console.log(`JsonSection props.theJson: ${props.theJson}`)
+    // console.log(`JsonSection theStart: ${props.theStart}`)
 
     const startSectionIndex = props.theJson.match(props.theStart)?.index
     console.log(`JsonSection startSectionIndex: ${startSectionIndex}`)
