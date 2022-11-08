@@ -7,6 +7,15 @@ import { trpc } from "../utils/trpc"
 import LayoutOld from "./layout/Layout-old"
 import { UserProvider } from '@auth0/nextjs-auth0';
 
+if (
+    typeof window !== "undefined" &&
+    process.env.NODE_ENV === "development"
+    // && /VIVID_ENABLED=true/.test(document.cookie)
+) {
+    import("vivid-studio").then((v) => v.run());
+    import("vivid-studio/style.css");
+}
+
 const MyApp: AppType = ({ Component, pageProps }) => {
 
     return (
