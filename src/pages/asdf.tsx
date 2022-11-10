@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link"
 
-const asdfPage: NextPage = () => {
+const AsdfPage: NextPage = () => {
 
     return (
         <>
@@ -24,7 +24,7 @@ const asdfPage: NextPage = () => {
             </div>
 
             <div className="mt-12">
-                <h3>External links</h3>
+                <h3>External resources</h3>
                 <div className="w-full grid gap-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mt-4 mb-8">
                     {linkListExternal.map((link) => (
                         <LinkRender key={link.title} title={link.title} url={link.url} description={link.description} />
@@ -36,7 +36,7 @@ const asdfPage: NextPage = () => {
 
 }
 
-export default asdfPage
+export default AsdfPage
 
 
 
